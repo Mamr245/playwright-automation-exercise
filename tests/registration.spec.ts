@@ -1,0 +1,45 @@
+import { test, expect } from '@playwright/test';
+import { PageManager } from '../page-objects/pageManager';
+import { newUserData, existingUser } from '../fixtures/testData';
+
+let pm: PageManager
+
+test.describe('Registration', () => {
+  test.beforeEach(async ({ page }) => {
+    pm = new PageManager(page)
+    await pm.homePage.goTo()
+    await expect(pm.homePage.header).toBeVisible()
+  })
+
+  test('Register User', async() => {
+    await pm.homePage.clickSignUpButton()
+    await expect(pm.loginPage.newUserSignUpText).toBeVisible()
+
+    await pm.loginPage.register(newUserData.username, newUserData.emailAddress)
+    await expect(pm.signUpPage.enterAccountInformationText).toBeVisible()
+  
+    await pm.signUpPage.typeAccountInformation(newUserData.accountInformation)
+    await pm.signUpPage.checkSignUpForNewsletter()
+    await pm.signUpPage.checkReceiveSpecialOffers()
+    await pm.signUpPage.typeAddressInformation(newUserData.addressInformation)
+    await pm.signUpPage.clickCreateAccount()
+
+    await expect(pm.accountCreatedPage.accountCreatedText).toBeVisible()
+    await pm.accountCreatedPage.clickContinueButton()
+
+    await expect(pm.homePage.loggedInAsUserText).toContainText(newUserData.username)
+    await pm.homePage.deleteAccount()
+    
+    await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
+    await pm.accountDeletedPage.clickContinueButton()
+  })
+
+  test('Register User with existing email', async () => {
+    await pm.homePage.clickSignUpButton()
+    await expect(pm.loginPage.newUserSignUpText).toBeVisible()
+    
+    await pm.loginPage.register('someUsername', existingUser.email)
+    await expect(pm.loginPage.emailAlredyExistsText).toBeVisible()
+  })
+});
+
