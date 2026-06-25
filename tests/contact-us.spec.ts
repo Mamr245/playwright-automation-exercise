@@ -20,7 +20,7 @@ test('Contact Us Form', async({ page }) => {
     await pm.contactUsPage.uploadFile()
     await pm.contactUsPage.submitInquiry()
     await expect(pm.contactUsPage.submissionSuccessMessage).toBeVisible()
-
+    await expect(pm.contactUsPage.submissionSuccessMessage).toHaveText('Success! Your details have been submitted successfully.')
     await pm.contactUsPage.clickHomeButton()
     await expect(page).toHaveURL('/')
 })
