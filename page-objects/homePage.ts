@@ -7,8 +7,20 @@ export class HomePage {
         return this.page.locator('#header')
     }
 
+    get footer() {
+        return this.page.locator('#footer')
+    }
+
     get loggedInAsUserText() {
         return this.page.getByRole('listitem').filter({ hasText: 'Logged in as' })
+    }
+
+    get subscriptionText() {
+        return this.page.getByText('Subscription')
+    }
+
+    get subscriptionSuccessMessage() {
+        return this.page.getByText('You have been successfully subscribed!')
     }
 
     async goTo() {
@@ -38,5 +50,10 @@ export class HomePage {
 
     async clickTestCasesButton() {
         await this.page.getByRole('button', {name: 'Test Cases'}).click()
+    }
+
+    async subscribeNewsletter(email: string) {
+        await this.page.locator('#susbscribe_email').fill(email)
+        await this.page.locator('#subscribe').click()
     }
 }
