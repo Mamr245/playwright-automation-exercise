@@ -48,6 +48,10 @@ export class HomePage {
         await this.page.getByRole('link', {name: 'Cart'}).click()
     }
 
+    async clickProductsLink() {
+        await this.page.getByRole('link', {name: 'Products'}).click()
+    }
+
     async clickConsentButton() {
         await this.page.getByRole('button', {name: 'Consent'}).click()
     }

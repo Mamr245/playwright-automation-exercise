@@ -1,0 +1,22 @@
+import { Page } from "@playwright/test"
+
+export class ProductsPage {
+    constructor(private readonly page: Page) {}
+
+    get allProductsText() {
+        return this.page.getByText('All Products')
+    }
+
+    get searchedProductsText() {
+        return this.page.getByText('Searched Products')
+    }
+
+    async getSearchResults() {
+        return this.page.locator('//*[@class="productinfo text-center"]//p').allInnerTexts()
+    }
+
+    async searchProduct(textToSearch: string) {
+        await this.page.locator('#search_product').fill(textToSearch)
+        await this.page.locator('#submit_search').click()
+    }
+}
