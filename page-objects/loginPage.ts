@@ -7,6 +7,10 @@ export class LoginPage {
         return this.page.getByText('New User Signup!')
     }
 
+    get loginToYourAccountText() {
+        return this.page.getByText('Login to your account')
+    }
+
     get emailAlredyExistsText () {
         return this.page.getByText('Email Address already exist!')
     }

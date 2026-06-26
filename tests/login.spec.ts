@@ -9,16 +9,16 @@ test.describe('Login', () => {
         pm = new PageManager(page)
         await pm.homePage.goTo()
         await expect(pm.homePage.header).toBeVisible()
+        await pm.homePage.clickSignUpLink()
+        await expect(pm.loginPage.loginToYourAccountText).toBeVisible()
     })
 
     test('Login User with correct email and password', async () => {
-        await pm.homePage.clickSignUpLink()
         await pm.loginPage.login(existingUser.email, existingUser.password)
         await expect(pm.homePage.loggedInAsUserText).toContainText(existingUser.username)
     })
 
     test('Login User with incorrect email and password', async () => {
-        await pm.homePage.clickSignUpLink()
         await pm.loginPage.login('incorrectEmail@email.com','wrongPassword')
         await expect(pm.loginPage.incorrectEmailPasswordText).toBeVisible()   
     })

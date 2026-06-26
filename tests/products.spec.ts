@@ -9,6 +9,10 @@ test.beforeEach(async ({ page }) => {
     await expect(pm.homePage.header).toBeVisible()
 })
 
+test('Verify All Products and product detail page', async () => {
+    
+})
+
 test('Search Product', async () => {
     const textToSearch = 'Blue'
 
