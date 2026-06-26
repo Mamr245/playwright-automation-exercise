@@ -6,6 +6,7 @@ import { AccountCreatedPage } from "./accountCreatedPage";
 import { AccountDeletedPage } from "./accountDeletedPage";
 import { ContactUsPage } from "./contactUsPage";
 import { TestCasesPage } from "./testCasesPage";
+import { CartPage } from "./cartPage";
 
 export class PageManager {
 
@@ -17,6 +18,7 @@ export class PageManager {
     private readonly _accountDeletedPage: AccountDeletedPage
     private readonly _contactUsPage: ContactUsPage
     private readonly _testCasesPage: TestCasesPage
+    private readonly _cartPage: CartPage
     
     constructor(page: Page) {
         this._page = page
@@ -27,6 +29,8 @@ export class PageManager {
         this._accountDeletedPage = new AccountDeletedPage(this._page)
         this._contactUsPage = new ContactUsPage(this._page)
         this._testCasesPage = new TestCasesPage(this._page)
+        this._cartPage = new CartPage(this._page)
+
     }
 
     get homePage() {
@@ -55,5 +59,9 @@ export class PageManager {
 
     get testCasesPage() {
         return this._testCasesPage
+    }
+
+    get cartPage() {
+        return this._cartPage
     }
 }

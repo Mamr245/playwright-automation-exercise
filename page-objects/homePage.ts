@@ -52,6 +52,10 @@ export class HomePage {
         await this.page.getByRole('button', {name: 'Test Cases'}).click()
     }
 
+    async clickCartButton() {
+        await this.page.getByRole('link', {name: 'Cart'}).click()
+    }
+
     async subscribeNewsletter(email: string) {
         await this.page.locator('#susbscribe_email').fill(email)
         await this.page.locator('#subscribe').click()

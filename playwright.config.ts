@@ -29,6 +29,7 @@ export default defineConfig({
     baseURL: 'https://automationexercise.com/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    screenshot: 'only-on-failure',
     testIdAttribute: 'data-qa',
     trace: 'on-first-retry',
   },
