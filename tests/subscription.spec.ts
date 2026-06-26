@@ -19,7 +19,7 @@ test.describe('Subscription', () => {
     })
 
     test(' Verify Subscription in Cart page', async ({page}) => {
-        await pm.homePage.clickCartButton()
+        await pm.homePage.clickCartLink()
         await expect(page).toHaveURL('/view_cart')
 
         await pm.cartPage.footer.scrollIntoViewIfNeeded()

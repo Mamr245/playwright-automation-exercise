@@ -12,7 +12,7 @@ test.describe('Registration', () => {
   })
 
   test('Register User', async() => {
-    await pm.homePage.clickSignUpButton()
+    await pm.homePage.clickSignUpLink()
     await expect(pm.loginPage.newUserSignUpText).toBeVisible()
 
     await pm.loginPage.register(newUserData.username, newUserData.emailAddress)
@@ -28,14 +28,14 @@ test.describe('Registration', () => {
     await pm.accountCreatedPage.clickContinueButton()
 
     await expect(pm.homePage.loggedInAsUserText).toContainText(newUserData.username)
-    await pm.homePage.deleteAccount()
+    await pm.homePage.clickDeleteAccountLink()
     
     await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
     await pm.accountDeletedPage.clickContinueButton()
   })
 
   test('Register User with existing email', async () => {
-    await pm.homePage.clickSignUpButton()
+    await pm.homePage.clickSignUpLink()
     await expect(pm.loginPage.newUserSignUpText).toBeVisible()
     
     await pm.loginPage.register('someUsername', existingUser.email)

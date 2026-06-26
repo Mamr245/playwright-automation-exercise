@@ -28,32 +28,32 @@ export class HomePage {
         await this.clickConsentButton()
     }
 
-    async clickSignUpButton() {
+    async clickSignUpLink() {
         await this.page.getByRole('link', {name: 'Signup / Login'}).click()
+    }
+ 
+    async clickDeleteAccountLink() {
+        await this.page.getByRole('link', {name: 'Delete Account'}).click()
+    }
+
+    async clickLogoutLink() {
+        await this.page.getByRole('link', {name: 'Logout'}).click()
+    }
+
+    async clickContactUsLink() {
+        await this.page.getByRole('link', {name: 'Contact us'}).click()
+    }
+
+    async clickCartLink() {
+        await this.page.getByRole('link', {name: 'Cart'}).click()
     }
 
     async clickConsentButton() {
         await this.page.getByRole('button', {name: 'Consent'}).click()
     }
 
-    async deleteAccount() {
-        await this.page.getByRole('link', {name: 'Delete Account'}).click()
-    }
-
-    async clickLogoutButton() {
-        await this.page.getByRole('link', {name: 'Logout'}).click()
-    }
-
-    async clickContactUsButton() {
-        await this.page.getByRole('link', {name: 'Contact us'}).click()
-    }
-
     async clickTestCasesButton() {
         await this.page.getByRole('button', {name: 'Test Cases'}).click()
-    }
-
-    async clickCartButton() {
-        await this.page.getByRole('link', {name: 'Cart'}).click()
     }
 
     async subscribeNewsletter(email: string) {

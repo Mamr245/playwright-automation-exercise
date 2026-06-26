@@ -9,7 +9,7 @@ test('Contact Us Form', async({ page }) => {
     await pm.homePage.goTo()
     await expect(pm.homePage.header).toBeVisible()
     
-    await pm.homePage.clickContactUsButton()
+    await pm.homePage.clickContactUsLink()
     await expect(pm.contactUsPage.getInTouchText).toBeVisible()
     
     await pm.contactUsPage.fillInquiryInfo(

@@ -12,13 +12,13 @@ test.describe('Login', () => {
     })
 
     test('Login User with correct email and password', async () => {
-        await pm.homePage.clickSignUpButton()
+        await pm.homePage.clickSignUpLink()
         await pm.loginPage.login(existingUser.email, existingUser.password)
         await expect(pm.homePage.loggedInAsUserText).toContainText(existingUser.username)
     })
 
     test('Login User with incorrect email and password', async () => {
-        await pm.homePage.clickSignUpButton()
+        await pm.homePage.clickSignUpLink()
         await pm.loginPage.login('incorrectEmail@email.com','wrongPassword')
         await expect(pm.loginPage.incorrectEmailPasswordText).toBeVisible()   
     })
