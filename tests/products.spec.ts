@@ -18,7 +18,6 @@ test('Verify All Products and product detail page', async () => {
 test('Search Product', async () => {
     const textToSearch = 'Blue'
 
-
     await pm.productsPage.searchProduct(textToSearch)
     await expect(pm.productsPage.searchedProductsText).toBeVisible()
 

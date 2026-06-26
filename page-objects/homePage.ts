@@ -23,6 +23,11 @@ export class HomePage {
         return this.page.getByText('You have been successfully subscribed!')
     }
 
+    get fullFledgedText() {
+        // contains(., 'Full-Fledged') => Looks for text 'Full-Fledged' inside the element (including children)
+        return this.page.locator("//*[@class='item active' and contains(., 'Full-Fledged')]")
+    }
+
     async goTo() {
         await this.page.goto("/")
         await this.clickConsentButton()
@@ -58,6 +63,10 @@ export class HomePage {
 
     async clickTestCasesButton() {
         await this.page.getByRole('button', {name: 'Test Cases'}).click()
+    }
+
+    async clickGoToTopOfPageButton() {
+        await this.page.locator('#scrollUp').click()
     }
 
     async subscribeNewsletter(email: string) {
