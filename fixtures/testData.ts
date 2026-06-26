@@ -28,6 +28,8 @@ export const existingUser = {
     password: '123456fg!.'
 } 
 
+export const emailToSubscribe = 'randyOrton@rko.com'
+
 export const inquiryData = {
     name: 'Wilson Smith',
     email: 'wilsmith1984@bigbrother.com',

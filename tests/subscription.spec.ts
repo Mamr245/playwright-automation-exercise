@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test"
 import { PageManager } from "../page-objects/pageManager"
-import { existingUser } from "../fixtures/testData"
+import { emailToSubscribe } from "../fixtures/testData"
 
 let pm: PageManager
 
@@ -14,7 +14,7 @@ test.describe('Subscription', () => {
     test('Verify Subscription in home page', async () => {
         await pm.homePage.footer.scrollIntoViewIfNeeded()
         await expect(pm.homePage.subscriptionText).toBeInViewport()
-        await pm.homePage.subscribeNewsletter('aaa@aaa.com')
+        await pm.homePage.subscribeNewsletter(emailToSubscribe)
         await expect(pm.homePage.subscriptionSuccessMessage).toBeVisible()
     })
 
@@ -24,7 +24,7 @@ test.describe('Subscription', () => {
 
         await pm.cartPage.footer.scrollIntoViewIfNeeded()
         await expect(pm.cartPage.subscriptionText).toBeInViewport()
-        await pm.cartPage.subscribeNewsletter('aaa@aaa.com')
+        await pm.cartPage.subscribeNewsletter(emailToSubscribe)
         await expect(pm.cartPage.subscriptionSuccessMessage).toBeVisible()
     })
 })
