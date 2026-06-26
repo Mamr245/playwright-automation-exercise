@@ -7,6 +7,8 @@ test.beforeEach(async ({ page }) => {
     pm = new PageManager(page)
     await pm.homePage.goTo()
     await expect(pm.homePage.header).toBeVisible()
+    await pm.homePage.clickProductsLink()
+    await expect(pm.productsPage.allProductsText).toBeVisible()
 })
 
 test('Verify All Products and product detail page', async () => {
@@ -16,8 +18,7 @@ test('Verify All Products and product detail page', async () => {
 test('Search Product', async () => {
     const textToSearch = 'Blue'
 
-    await pm.homePage.clickProductsLink()
-    await expect(pm.productsPage.allProductsText).toBeVisible()
+
     await pm.productsPage.searchProduct(textToSearch)
     await expect(pm.productsPage.searchedProductsText).toBeVisible()
 
