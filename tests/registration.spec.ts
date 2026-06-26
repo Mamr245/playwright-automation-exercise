@@ -9,12 +9,11 @@ test.describe('Registration', () => {
     pm = new PageManager(page)
     await pm.homePage.goTo()
     await expect(pm.homePage.header).toBeVisible()
+    await pm.homePage.clickSignUpLink()
+    await expect(pm.loginPage.newUserSignUpText).toBeVisible()
   })
 
   test('Register User', async() => {
-    await pm.homePage.clickSignUpLink()
-    await expect(pm.loginPage.newUserSignUpText).toBeVisible()
-
     await pm.loginPage.register(newUserData.username, newUserData.emailAddress)
     await expect(pm.signUpPage.enterAccountInformationText).toBeVisible()
   
@@ -35,9 +34,6 @@ test.describe('Registration', () => {
   })
 
   test('Register User with existing email', async () => {
-    await pm.homePage.clickSignUpLink()
-    await expect(pm.loginPage.newUserSignUpText).toBeVisible()
-    
     await pm.loginPage.register('someUsername', existingUser.email)
     await expect(pm.loginPage.emailAlredyExistsText).toBeVisible()
   })
