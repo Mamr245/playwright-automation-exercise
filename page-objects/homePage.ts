@@ -1,7 +1,7 @@
 import { Page } from "@playwright/test"
 
 export class HomePage {
-    constructor(private readonly page: Page) {}
+    constructor(protected readonly page: Page) {}
 
     get header() {
         return this.page.locator('#header')
