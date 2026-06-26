@@ -18,7 +18,7 @@ test.describe('Subscription', () => {
         await expect(pm.homePage.subscriptionSuccessMessage).toBeVisible()
     })
 
-    test(' Verify Subscription in Cart page', async ({page}) => {
+    test('Verify Subscription in Cart page', async ({page}) => {
         await pm.homePage.clickCartLink()
         await expect(page).toHaveURL('/view_cart')
 
