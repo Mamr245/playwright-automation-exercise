@@ -16,7 +16,7 @@ export class ProductsPage {
     }
 
     async getSearchResults() {
-        return this.page.locator('//*[@class="productinfo text-center"]//p').allInnerTexts()
+        return await this.page.locator('//*[@class="productinfo text-center"]//p').allInnerTexts()
     }
 
     async searchProduct(textToSearch: string) {
