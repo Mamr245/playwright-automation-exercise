@@ -24,7 +24,7 @@ export const newUserData = {
 
 export const existingUser = {
     username: 'validUser',
-    email: 'validEmail@email.com',
+    email: 'validEmail@gemail.com',
     password: '123456fg!.'
 } 
 
@@ -39,6 +39,6 @@ export const inquiryData = {
 
 export const reviewData = {
     name: 'Special One',
-    email: 'special1@email.com',
+    email: 'special1@rm.com',
     review: 'Looks good and fits my body nicely. Shipping was super fast too!'
 } 
