@@ -23,7 +23,7 @@ test('Verify All Products and product detail page', async ({page}) => {
     await pm.productsPage.clickViewProduct(itemIndex)
     await expect(page).toHaveURL(productReference!) //The exclamation mark indicates that productReference is surely not null
 
-    await expect(pm.productDetailsPage.productName).toHaveText(/\S+/) // /\S+/: regex expression to match one or more non-whitespace characters
+    await expect(pm.productDetailsPage.productName).toHaveText(/\S+/) // /\S+/ => regex expression to match one or more non-whitespace characters
     await expect(pm.productDetailsPage.productCategory).toBeVisible()
     await expect(pm.productDetailsPage.productPrice).toBeVisible()
     await expect(pm.productDetailsPage.productAvailabilty).toBeVisible()
