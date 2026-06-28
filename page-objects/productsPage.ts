@@ -1,8 +1,6 @@
-import { Page } from "@playwright/test"
+import { HomePage } from "./homePage"
 
-export class ProductsPage {
-    constructor(private readonly page: Page) {}
-
+export class ProductsPage extends HomePage {
     get allProductsText() {
         return this.page.getByText('All Products')
     }
@@ -11,8 +9,12 @@ export class ProductsPage {
         return this.page.getByText('Searched Products')
     }
 
-    get productList() {
-        return this.page.getByText('Searched Products')
+    get womenTopsProductsText() {
+        return this.page.getByText('Women - Tops Products')
+    }
+    
+    get menJeansProductsText() {
+        return this.page.getByText('Men - Jeans Products')
     }
 
     async getSearchResults() {

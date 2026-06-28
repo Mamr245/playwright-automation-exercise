@@ -73,4 +73,9 @@ export class HomePage {
         await this.page.locator('#susbscribe_email').fill(email)
         await this.page.locator('#subscribe').click()
     }
+
+    async clickCategory(category: string, productType: string) {
+        await this.page.locator(`a[href*="#${category}"]`).click();
+        await this.page.locator(`#${category}`).getByRole('link', { name: productType }).click();
+    }
 }
