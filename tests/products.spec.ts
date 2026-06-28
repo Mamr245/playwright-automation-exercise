@@ -58,9 +58,7 @@ test.describe('Product Details Page', () => {
     })
 })
 
-test.skip('View Category Products', async () => {
 
-})
 
 
 
