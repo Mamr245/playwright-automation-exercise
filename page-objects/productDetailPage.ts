@@ -27,4 +27,15 @@ export class ProductDetailsPage {
     get productBrand() {
         return this.page.getByText('Brand:')
     }
+
+    get thankYouForYourReviewMessage() {
+        return this.page.locator('//span[contains(text(), "Thank you for your review.")]')
+    }
+
+    async addReview(name: string, email: string, review: string) {
+        await this.page.locator("#name").fill(name)
+        await this.page.locator("#email").fill(email)
+        await this.page.locator("#review").fill(review)
+        await this.page.locator('#button-review').click()
+    }
 }

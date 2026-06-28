@@ -36,3 +36,9 @@ export const inquiryData = {
     subject: 'Shipping price',
     message: 'Greetings! I would like to know why I\'m being charged this amount to have my order delivered. You can find my order information attached to this message'
 }
+
+export const reviewData = {
+    name: 'Special One',
+    email: 'special1@email.com',
+    review: 'Looks good and fits my body nicely. Shipping was super fast too!'
+} 

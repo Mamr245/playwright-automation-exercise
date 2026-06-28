@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test"
 import { PageManager } from "../page-objects/pageManager"
+import { reviewData } from "../fixtures/testData"
 
 let pm: PageManager
 
@@ -42,4 +43,14 @@ test('Search Product', async () => {
     searchResults.forEach(searchResult => {
         expect(searchResult).toMatch(new RegExp(textToSearch, "i")) // "i" means "Ignore Case"
     })
+})
+
+test('Add review on product', async ({page}) => {
+    const itemIndex = 0
+    const productReference = await pm.productsPage.getProductReference(itemIndex)
+
+    await pm.productsPage.clickViewProduct(itemIndex)
+    await expect(page).toHaveURL(productReference!)
+    await pm.productDetailsPage.addReview(reviewData.name, reviewData.email, reviewData.review)
+    await expect(pm.productDetailsPage.thankYouForYourReviewMessage).toBeVisible()
 })
