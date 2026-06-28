@@ -8,6 +8,7 @@ import { ContactUsPage } from "./contactUsPage";
 import { TestCasesPage } from "./testCasesPage";
 import { CartPage } from "./cartPage";
 import { ProductsPage } from "./productsPage";
+import { ProductDetailsPage } from "./productDetailPage";
 
 export class PageManager {
 
@@ -21,7 +22,8 @@ export class PageManager {
     private readonly _testCasesPage: TestCasesPage
     private readonly _cartPage: CartPage
     private readonly _productsPage: ProductsPage
-    
+    private readonly _productDetailsPage: ProductDetailsPage
+
     constructor(page: Page) {
         this._page = page
         this._homePage = new HomePage(this._page)
@@ -33,6 +35,8 @@ export class PageManager {
         this._testCasesPage = new TestCasesPage(this._page)
         this._cartPage = new CartPage(this._page)
         this._productsPage = new ProductsPage(this._page)
+        this._productDetailsPage = new ProductDetailsPage(this._page)
+
     }
 
     get homePage() {
@@ -69,5 +73,9 @@ export class PageManager {
 
     get productsPage() {
         return this._productsPage
+    }
+
+    get productDetailsPage() {
+        return this._productDetailsPage
     }
 }

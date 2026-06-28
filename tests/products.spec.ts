@@ -11,8 +11,24 @@ test.beforeEach(async ({ page }) => {
     await expect(pm.productsPage.allProductsText).toBeVisible()
 })
 
-test('Verify All Products and product detail page', async () => {
-    
+test('Verify All Products and product detail page', async ({page}) => {
+    /* 
+        itemIndex = 0 refers to first item in Products page
+        itemIndex = 1 refers to second item in Products page
+        And so on... 
+    */
+    const itemIndex = 0
+    const productReference = await pm.productsPage.getProductReference(itemIndex)
+
+    await pm.productsPage.clickViewProduct(itemIndex)
+    await expect(page).toHaveURL(productReference!) //The exclamation mark indicates that productReference is surely not null
+
+    await expect(pm.productDetailsPage.productName).toHaveText(/\S+/) // /\S+/: regex expression to match one or more non-whitespace characters
+    await expect(pm.productDetailsPage.productCategory).toBeVisible()
+    await expect(pm.productDetailsPage.productPrice).toBeVisible()
+    await expect(pm.productDetailsPage.productAvailabilty).toBeVisible()
+    await expect(pm.productDetailsPage.productCondition).toBeVisible()
+    await expect(pm.productDetailsPage.productBrand).toBeVisible()
 })
 
 test('Search Product', async () => {
