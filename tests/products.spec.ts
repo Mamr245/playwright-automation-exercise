@@ -3,6 +3,8 @@ import { PageManager } from "../page-objects/pageManager"
 import { reviewData } from "../fixtures/testData"
 
 let pm: PageManager
+let itemIndex: number
+let productReference: string | null
 
 test.beforeEach(async ({ page }) => {
     pm = new PageManager(page)
@@ -10,17 +12,17 @@ test.beforeEach(async ({ page }) => {
     await expect(pm.homePage.header).toBeVisible()
     await pm.homePage.clickProductsLink()
     await expect(pm.productsPage.allProductsText).toBeVisible()
-})
 
-test('Verify All Products and product detail page', async ({page}) => {
     /* 
         itemIndex = 0 refers to first item in Products page
         itemIndex = 1 refers to second item in Products page
         And so on... 
     */
-    const itemIndex = 0
-    const productReference = await pm.productsPage.getProductReference(itemIndex)
+    itemIndex = 0
+    productReference = await pm.productsPage.getProductReference(itemIndex)
+})
 
+test('Verify All Products and product detail page', async ({page}) => {
     await pm.productsPage.clickViewProduct(itemIndex)
     await expect(page).toHaveURL(productReference!) //The exclamation mark indicates that productReference is surely not null
 
@@ -46,9 +48,6 @@ test('Search Product', async () => {
 })
 
 test('Add review on product', async ({page}) => {
-    const itemIndex = 0
-    const productReference = await pm.productsPage.getProductReference(itemIndex)
-
     await pm.productsPage.clickViewProduct(itemIndex)
     await expect(page).toHaveURL(productReference!)
     await pm.productDetailsPage.addReview(reviewData.name, reviewData.email, reviewData.review)
