@@ -18,9 +18,9 @@ test.describe('Product Details Page', () => {
         await expect(pm.productsPage.allProductsText).toBeVisible()
 
         /* 
-            itemIndex = 0 refers to first item in Products page
-            itemIndex = 1 refers to second item in Products page
-            And so on... 
+        * itemIndex = 0 refers to first item in Products page
+        * itemIndex = 1 refers to second item in Products page
+        * And so on... 
         */
         itemIndex = 0
         productReference = await pm.productsPage.getProductReference(itemIndex)
@@ -50,7 +50,7 @@ test.describe('Product Details Page', () => {
         await pm.productsPage.searchProduct(textToSearch)
         await expect(pm.productsPage.searchedProductsText).toBeVisible()
 
-        /* Assert that returned search results have the text used in the search */
+        // Assert that returned search results have the text used in the search
         const searchResults = await pm.productsPage.getSearchResults()
         searchResults.forEach(searchResult => {
             expect(searchResult).toMatch(new RegExp(textToSearch, "i")) // "i" means "Ignore Case"
