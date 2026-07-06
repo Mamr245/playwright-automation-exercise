@@ -20,7 +20,7 @@ test.describe('Cart', () => {
     referenceCart = [] 
 
     /* 
-    * Variable used to define which items to add to cart
+    * Variable used to define which items will be added to the cart
     * itemIndex = 0 refers to first item in Products page
     * itemIndex = 1 refers to second item in Products page
     * And so on... 
