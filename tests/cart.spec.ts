@@ -40,7 +40,7 @@ test.describe('Cart', () => {
     expect(numberOfItems).toEqual(referenceCart.length)
 
     // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
-    for (let i = 1; i <= numberOfItems; i++) {
+    for (let i = 0; i < numberOfItems; i++) {
       const itemDescription = await pm.cartPage.getItemDescription(i)
       const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
       expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
