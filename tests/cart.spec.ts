@@ -61,4 +61,4 @@ test.describe('Cart', () => {
     expect(await pm.cartPage.getItemReference(0)).toContain(productReference) 
     expect(await pm.cartPage.getItemTotalQuantity(0)).toContain(itemQuantity.toString())
   })
-});
+})
