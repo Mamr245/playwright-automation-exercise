@@ -50,7 +50,11 @@ export class ProductsPage extends HomePage {
         await this.page.getByRole('button', {name: 'Continue Shopping'}).click()
     }
 
-    private async updateCartArray(itemIndex: number, cart: Array<object>) {
+    async clickViewCartLink() {
+        await this.page.getByRole('link', {name: 'View Cart'}).click()
+    }
+
+    protected async updateCartArray(itemIndex: number, cart: Array<object>) {
         /* Steps to update the cart object to perform assertions later:
         *    1 - Get item name and price
         *    2 - Check if item is already in the cart 

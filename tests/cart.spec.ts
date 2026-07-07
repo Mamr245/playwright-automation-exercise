@@ -42,10 +42,23 @@ test.describe('Cart', () => {
     // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
     for (let i = 1; i <= numberOfItems; i++) {
       const itemDescription = await pm.cartPage.getItemDescription(i)
-      const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any;
+      const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
       expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
       expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
       expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
     }
+  })
+
+  test('Verify Product quantity in Cart', async({ page }) => {
+    const itemIndex = 2 // itemIndex = 2 refers to third item in Products page
+    const itemQuantity = 4 // Quantity to add
+    const productReference = await pm.productsPage.getProductReference(itemIndex)
+
+    await pm.productsPage.clickViewProduct(itemIndex)
+    await expect(page).toHaveURL(productReference!)
+    await pm.productDetailsPage.addToCart(itemQuantity)
+    await pm.productDetailsPage.clickViewCartLink()
+    expect(await pm.cartPage.getItemReference(0)).toContain(productReference) 
+    expect(await pm.cartPage.getItemTotalQuantity(0)).toContain(itemQuantity.toString())
   })
 });

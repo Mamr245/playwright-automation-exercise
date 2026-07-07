@@ -6,18 +6,27 @@ export class CartPage extends HomePage {
     }
 
     async getItemDescription(rowIndex: number) {
-        return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_description"]//a`).innerText()
+       //return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_description"]//a`).innerText()
+        return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_description a').innerText() 
+    }
+
+    async getItemReference(rowIndex: number) {
+        return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_description a').getAttribute('href')
     }
 
     async getItemTotalQuantity(rowIndex: number) {
-        return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_quantity"]`).innerText()
+        return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_quantity').innerText() 
     }
     
     async getItemPrice(rowIndex: number) {
-        return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_price"]//p`).innerText()
+        return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_price p').innerText() 
+        //return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_price"]//p`).innerText()
     }
 
     async getItemTotalPrice(rowIndex: number) {
-        return await this.page.locator(`//tr[@id="product-${rowIndex}"]//p[@class="cart_total_price"]`).innerText()
+        return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_total_price').innerText() 
+        //return await this.page.locator(`//tr[@id="product-${rowIndex}"]//p[@class="cart_total_price"]`).innerText()
     }
+
+
 }

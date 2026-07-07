@@ -1,10 +1,8 @@
-import { Page } from "@playwright/test"
+import { ProductsPage } from "./productsPage"
 
-export class ProductDetailsPage {
-    constructor(private readonly page: Page) {}
-
+export class ProductDetailsPage extends ProductsPage {
     get productName() {
-        return this.page.locator('//*[@class="product-information"]/h2')       
+        return this.page.locator('//*[@class="product-information"]/h2')      
     }
 
     get productCategory() {
@@ -37,5 +35,10 @@ export class ProductDetailsPage {
         await this.page.locator("#email").fill(email)
         await this.page.locator("#review").fill(review)
         await this.page.locator('#button-review').click()
+    }
+
+    async addToCart(quantity: number) {
+        await this.page.locator('#quantity').fill(quantity.toString())
+        await this.page.getByRole('button', {name: 'Add to Cart'}).click()
     }
 }
