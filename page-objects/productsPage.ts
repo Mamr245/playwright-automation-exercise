@@ -65,15 +65,13 @@ export class ProductsPage extends HomePage {
         const itemPrice = await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//h2').nth(itemIndex).innerText()
         const priceValue = Number(itemPrice.replace("Rs. ", ""))
         const product = {name: itemName, price: priceValue, totalQuantity: 1, totalPrice: priceValue}
-        const itemAlreadyInCart = cart.find((item: any) => item.name === itemName) as any;
-
-        Number(itemPrice.replace("Rs. ", ""));
+        const itemAlreadyInCart = cart.find((item: any) => item.name === itemName) as any
 
         if (itemAlreadyInCart) {
             itemAlreadyInCart.totalQuantity++
             itemAlreadyInCart.totalPrice = priceValue * itemAlreadyInCart.totalQuantity
         } else {
-            cart.push(product);
+            cart.push(product)
         }
     } 
 }
