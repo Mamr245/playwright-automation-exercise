@@ -25,7 +25,7 @@ export class ContactUsPage {
     async submitInquiry () {
         this.page.once('dialog', async dialog => {
             await dialog.accept()
-        });
+        })
         await this.page.getByTestId('submit-button').click()
     }
 
