@@ -2,11 +2,10 @@ import { HomePage } from "./homePage"
 
 export class CartPage extends HomePage {
     async getCartNumberOfItems() {
-        return await this.page.locator("#cart_info_table tbody tr").count();
+        return await this.page.locator("#cart_info_table tbody tr").count()
     }
 
     async getItemDescription(rowIndex: number) {
-       //return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_description"]//a`).innerText()
         return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_description a').innerText() 
     }
 
@@ -20,13 +19,9 @@ export class CartPage extends HomePage {
     
     async getItemPrice(rowIndex: number) {
         return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_price p').innerText() 
-        //return await this.page.locator(`//tr[@id="product-${rowIndex}"]/td[@class="cart_price"]//p`).innerText()
     }
 
     async getItemTotalPrice(rowIndex: number) {
         return await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_total_price').innerText() 
-        //return await this.page.locator(`//tr[@id="product-${rowIndex}"]//p[@class="cart_total_price"]`).innerText()
     }
-
-
 }
