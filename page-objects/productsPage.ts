@@ -75,7 +75,5 @@ export class ProductsPage extends HomePage {
         } else {
             cart.push(product);
         }
-        /* print cart contents
-        console.log(cart) */
     } 
 }
