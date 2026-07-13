@@ -32,4 +32,12 @@ export class CartPage extends HomePage {
     async removeItem(rowIndex: number) {
         await this.page.locator('tr[id^="product-"]').nth(rowIndex).locator('.cart_quantity_delete').click()
     }
+
+    async clickProceedToCheckoutLink() {
+        await this.page.getByText('Proceed to checkout').click()
+    }
+
+    async clickRegisterLoginLink() {
+        await this.page.getByRole('link', {name: 'Register / Login'}).click()
+    }
 }

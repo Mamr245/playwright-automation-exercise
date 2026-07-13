@@ -1,6 +1,6 @@
 export const newUserData = {
-    username: 'jd26',
-    emailAddress: 'jd26@mailg.com',
+    username: `jd${Date.now()}`,
+    emailAddress: `jd${Date.now()}@mailg.com`,
     accountInformation: {
         title: 'Mr.',
         password: '123456fg!.',
@@ -42,3 +42,11 @@ export const reviewData = {
     email: 'special1@rm.com',
     review: 'Looks good and fits my body nicely. Shipping was super fast too!'
 } 
+
+export const cardData = {
+    name: 'John Doe',
+    number: '5105 1051 0510 5100',
+    cvc: '845',
+    expiryMonth: '10',
+    expiryYear: '2028'
+}
