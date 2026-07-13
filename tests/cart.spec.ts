@@ -16,6 +16,11 @@ test.describe('Cart', () => {
     /* 
     * Variable used to perform assertions later in the test.
     * Will have all items' names, prices and quantities 
+    * Example:
+    * [
+    *   { name: 'Blue Top', price: 500, totalQuantity: 1, totalPrice: 500 },
+    *   { name: 'Men Tshirt', price: 400, totalQuantity: 1, totalPrice: 400 }
+    * ]
     */ 
     referenceCart = [] 
 
@@ -33,6 +38,8 @@ test.describe('Cart', () => {
       await pm.productsPage.addProductToCart(itemIndex, referenceCart)
       await pm.productsPage.clickContinueShoppingButton()
     }
+
+    console.log(referenceCart)
 
     // Go to cart page and check all items are there
     await pm.productsPage.clickCartLink()
