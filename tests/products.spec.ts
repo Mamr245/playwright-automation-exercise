@@ -16,15 +16,17 @@ test.describe('Product Details Page', () => {
     test.beforeEach(async () => {
         await pm.homePage.clickProductsLink()
         await expect(pm.productsPage.allProductsText).toBeVisible()
-
-        itemIndex = 0 // itemIndex = 0 refers to first item in Products page
+        
+        itemIndex = 0 // First item in Products page
         productReference = await pm.productsPage.getProductReference(itemIndex)
     })
 
     test('Verify All Products and product detail page', async ({page}) => {
         await pm.productsPage.clickViewProduct(itemIndex)
+        // The non-null assertion (!) tells TypeScript that productReference cannot be null here.
         await expect(page).toHaveURL(productReference!) //The exclamation mark indicates that productReference is surely not null
-        await expect(pm.productDetailsPage.productName).toHaveText(/\S+/) // /\S+/ => regex expression to match one or more non-whitespace characters
+        // /\S+/ => regex expression to match one or more non-whitespace characters
+        await expect(pm.productDetailsPage.productName).toHaveText(/\S+/) 
         await expect(pm.productDetailsPage.productCategory).toBeVisible()
         await expect(pm.productDetailsPage.productPrice).toBeVisible()
         await expect(pm.productDetailsPage.productAvailabilty).toBeVisible()
@@ -41,14 +43,14 @@ test.describe('Product Details Page', () => {
 
     test('Search Product', async () => {
         const textToSearch = 'Blue'
-
         await pm.productsPage.searchProduct(textToSearch)
         await expect(pm.productsPage.searchedProductsText).toBeVisible()
 
         // Assert that search results have the text used in the search
         const searchResults = await pm.productsPage.getSearchResults()
         searchResults.forEach(searchResult => {
-            expect(searchResult).toMatch(new RegExp(textToSearch, "i")) // "i" means "Ignore Case"
+            // "i" means "Ignore Case"
+            expect(searchResult).toMatch(new RegExp(textToSearch, "i")) 
         })
     })
 })

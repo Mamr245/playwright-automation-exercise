@@ -22,17 +22,10 @@ test.describe('Cart', () => {
   })
 
   test('Add Products in Cart', async() => {
-    /* 
-    * itemIndex = 0 refers to first item in Products page
-    * itemIndex = 1 refers to second item in Products page
-    * And so on... 
-    * 
-    * itemIndexes array contains the indexes of the items we want to add
-    */
-    const itemIndexes = [0, 1]
     await pm.homePage.clickProductsLink()
 
     // Add products to cart
+    const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
       await pm.productsPage.addProductToCart(itemIndex, referenceCart)
       await pm.productsPage.clickContinueShoppingButton()
@@ -54,8 +47,8 @@ test.describe('Cart', () => {
   })
 
   test('Verify Product quantity in Cart', async({ page }) => {
-    const itemIndex = 2 // itemIndex = 2 refers to third item in Products page
-    const itemQuantity = 4 // Quantity to add
+    const itemIndex = 2
+    const itemQuantity = 4
     const productReference = await pm.productsPage.getProductReference(itemIndex)
 
     await pm.productsPage.clickViewProduct(itemIndex)
@@ -67,10 +60,8 @@ test.describe('Cart', () => {
   })
 
   test('Remove products from cart', async() => {
-    // itemIndexes array contains the indexes of the items we want to add
-    const itemIndexes = [0, 1]
-
     // Add products to cart
+    const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
       await pm.productsPage.addProductToCart(itemIndex, referenceCart)
       await pm.productsPage.clickContinueShoppingButton()
