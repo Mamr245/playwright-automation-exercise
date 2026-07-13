@@ -5,7 +5,6 @@ import { SignUpPage } from "./signUpPage";
 import { AccountCreatedPage } from "./accountCreatedPage";
 import { AccountDeletedPage } from "./accountDeletedPage";
 import { ContactUsPage } from "./contactUsPage";
-import { TestCasesPage } from "./testCasesPage";
 import { CartPage } from "./cartPage";
 import { ProductsPage } from "./productsPage";
 import { ProductDetailsPage } from "./productDetailPage";
@@ -19,7 +18,6 @@ export class PageManager {
     private readonly _accountCreatedPage: AccountCreatedPage
     private readonly _accountDeletedPage: AccountDeletedPage
     private readonly _contactUsPage: ContactUsPage
-    private readonly _testCasesPage: TestCasesPage
     private readonly _cartPage: CartPage
     private readonly _productsPage: ProductsPage
     private readonly _productDetailsPage: ProductDetailsPage
@@ -32,7 +30,6 @@ export class PageManager {
         this._accountCreatedPage = new AccountCreatedPage(this._page)
         this._accountDeletedPage = new AccountDeletedPage(this._page)
         this._contactUsPage = new ContactUsPage(this._page)
-        this._testCasesPage = new TestCasesPage(this._page)
         this._cartPage = new CartPage(this._page)
         this._productsPage = new ProductsPage(this._page)
         this._productDetailsPage = new ProductDetailsPage(this._page)
@@ -61,10 +58,6 @@ export class PageManager {
 
     get contactUsPage() {
         return this._contactUsPage
-    }
-
-    get testCasesPage() {
-        return this._testCasesPage
     }
 
     get cartPage() {
