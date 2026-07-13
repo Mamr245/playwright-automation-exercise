@@ -2,7 +2,15 @@ import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
 
 let pm: PageManager
-let itemIndexes: number[]
+  /* 
+  * referenceCart => Variable used to perform assertions in some tests.
+  * It will contain necessary info about the items added to cart
+  * Example:
+  * [
+  *   { name: 'Blue Top', price: 500, totalQuantity: 1, totalPrice: 500 },
+  *   { name: 'Men Tshirt', price: 400, totalQuantity: 1, totalPrice: 400 }
+  * ]
+  */ 
 let referenceCart: object[]
 
 test.describe('Cart', () => {
@@ -10,27 +18,18 @@ test.describe('Cart', () => {
     pm = new PageManager(page)
     await pm.homePage.goTo()
     await expect(pm.homePage.header).toBeVisible()
+    referenceCart = []
   })
 
   test('Add Products in Cart', async() => {
     /* 
-    * Variable used to perform assertions later in the test.
-    * Will have all items' names, prices and quantities 
-    * Example:
-    * [
-    *   { name: 'Blue Top', price: 500, totalQuantity: 1, totalPrice: 500 },
-    *   { name: 'Men Tshirt', price: 400, totalQuantity: 1, totalPrice: 400 }
-    * ]
-    */ 
-    referenceCart = [] 
-
-    /* 
-    * Variable used to define which items will be added to the cart
     * itemIndex = 0 refers to first item in Products page
     * itemIndex = 1 refers to second item in Products page
     * And so on... 
+    * 
+    * itemIndexes array contains the indexes of the items we want to add
     */
-    itemIndexes = [0, 1]
+    const itemIndexes = [0, 1]
     await pm.homePage.clickProductsLink()
 
     // Add products to cart
@@ -38,8 +37,6 @@ test.describe('Cart', () => {
       await pm.productsPage.addProductToCart(itemIndex, referenceCart)
       await pm.productsPage.clickContinueShoppingButton()
     }
-
-    console.log(referenceCart)
 
     // Go to cart page and check all items are there
     await pm.productsPage.clickCartLink()
@@ -67,5 +64,27 @@ test.describe('Cart', () => {
     await pm.productDetailsPage.clickViewCartLink()
     expect(await pm.cartPage.getItemReference(0)).toContain(productReference) 
     expect(await pm.cartPage.getItemTotalQuantity(0)).toContain(itemQuantity.toString())
+  })
+
+  test('Remove products from cart', async() => {
+    // itemIndexes array contains the indexes of the items we want to add
+    const itemIndexes = [0, 1]
+
+    // Add products to cart
+    for (const itemIndex of itemIndexes) {
+      await pm.productsPage.addProductToCart(itemIndex, referenceCart)
+      await pm.productsPage.clickContinueShoppingButton()
+    }
+
+    // Go to cart page and check all items are there
+    await pm.productsPage.clickCartLink()
+    const numberOfItems = await pm.cartPage.getCartNumberOfItems()
+    expect(numberOfItems).toEqual(referenceCart.length)
+
+    // Remove first item and validate correct item was removed
+    const itemToRemoveReference = await pm.cartPage.getItemReference(0)
+    console.log(itemToRemoveReference)
+    await pm.cartPage.removeItem(0)
+    await expect(pm.cartPage.cartTable).not.toContainText(itemToRemoveReference!)
   })
 })

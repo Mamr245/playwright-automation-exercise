@@ -1,8 +1,12 @@
 import { HomePage } from "./homePage"
 
 export class CartPage extends HomePage {
+    get cartTable() {
+        return this.page.locator('#cart_info_table')
+    }
+    
     async getCartNumberOfItems() {
-        return this.page.locator("#cart_info_table tbody tr").count()
+        return this.page.locator('tr[id^="product-"]').count()
     }
 
     async getItemDescription(rowIndex: number) {

@@ -17,12 +17,7 @@ test.describe('Product Details Page', () => {
         await pm.homePage.clickProductsLink()
         await expect(pm.productsPage.allProductsText).toBeVisible()
 
-        /* 
-        * itemIndex = 0 refers to first item in Products page
-        * itemIndex = 1 refers to second item in Products page
-        * And so on... 
-        */
-        itemIndex = 0
+        itemIndex = 0 // itemIndex = 0 refers to first item in Products page
         productReference = await pm.productsPage.getProductReference(itemIndex)
     })
 
@@ -50,7 +45,7 @@ test.describe('Product Details Page', () => {
         await pm.productsPage.searchProduct(textToSearch)
         await expect(pm.productsPage.searchedProductsText).toBeVisible()
 
-        // Assert that returned search results have the text used in the search
+        // Assert that search results have the text used in the search
         const searchResults = await pm.productsPage.getSearchResults()
         searchResults.forEach(searchResult => {
             expect(searchResult).toMatch(new RegExp(textToSearch, "i")) // "i" means "Ignore Case"
@@ -64,6 +59,3 @@ test('View Category Products', async () => {
     await pm.productsPage.clickCategory('Men', 'JEANS')
     await expect(pm.productsPage.menJeansProductsText).toBeVisible()
 })
-
-
-

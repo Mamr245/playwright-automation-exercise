@@ -37,5 +37,4 @@ test.describe('Registration', () => {
     await pm.loginPage.register('someUsername', existingUser.email)
     await expect(pm.loginPage.emailAlredyExistsText).toBeVisible()
   })
-});
-
+})
