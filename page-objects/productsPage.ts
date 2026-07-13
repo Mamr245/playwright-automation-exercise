@@ -39,7 +39,7 @@ export class ProductsPage extends HomePage {
         return this.page.getByRole('link', {name: 'View product'}).nth(itemIndex).getAttribute('href')
     }
 
-    async addProductToCart(itemIndex: number, cart: Array<object>) {
+    async addProductToCart(itemIndex: number, cart: object[]) {
         await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]').nth(itemIndex).hover()
         await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//a').nth(itemIndex).click()
         await this.updateCartArray(itemIndex, cart)
@@ -54,7 +54,7 @@ export class ProductsPage extends HomePage {
         await this.page.getByRole('link', {name: 'View Cart'}).click()
     }
 
-    protected async updateCartArray(itemIndex: number, cart: Array<object>) {
+    protected async updateCartArray(itemIndex: number, cart: object[]) {
         /* Steps to update the cart object to perform assertions later:
         *    1 - Get item name and price
         *    2 - Check if item is already in the cart 

@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
 
 let pm: PageManager
-let itemIndexes: Array<number>
-let referenceCart: Array<object>
+let itemIndexes: number[]
+let referenceCart: object[]
 
 test.describe('Cart', () => {
   test.beforeEach(async ({ page }) => {
