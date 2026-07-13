@@ -14,7 +14,7 @@ test.describe('Login', () => {
     })
 
     test('Login User with correct email and password', async () => {
-        await pm.loginPage.login(existingUser.email, existingUser.password)
+        await pm.loginPage.login(existingUser.emailAddress, existingUser.password)
         await expect(pm.homePage.loggedInAsUserText).toContainText(existingUser.username)
     })
 

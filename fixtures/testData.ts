@@ -1,6 +1,6 @@
 export const newUserData = {
     username: `jd${Date.now()}`,
-    emailAddress: `jd${Date.now()}@mailg.com`,
+    emailAddress: `jd${Date.now()}@example.com`,
     accountInformation: {
         title: 'Mr.',
         password: '123456fg!.',
@@ -24,26 +24,26 @@ export const newUserData = {
 
 export const existingUser = {
     username: 'validUser',
-    email: 'validEmail@gemail.com',
+    emailAddress: 'validEmail@example.com',
     password: '123456fg!.'
 } 
 
-export const emailToSubscribe = 'randyOrton@rko.com'
+export const emailToSubscribe = 'randyOrton@example.com'
 
 export const inquiryData = {
     name: 'Wilson Smith',
-    email: 'wilsmith1984@bigbrother.com',
+    emailAddress: 'wilsmith1984@example.com',
     subject: 'Shipping price',
     message: 'Greetings! I would like to know why I\'m being charged this amount to have my order delivered. You can find my order information attached to this message'
 }
 
 export const reviewData = {
     name: 'Special One',
-    email: 'special1@rm.com',
-    review: 'Looks good and fits my body nicely. Shipping was super fast too!'
+    emailAddress: 'special1@example.com',
+    review: 'Looks good and fits my body nicely. Delivery was super fast too!'
 } 
 
-export const cardData = {
+export const creditCardData = {
     name: 'John Doe',
     number: '5105 1051 0510 5100',
     cvc: '845',

@@ -14,7 +14,7 @@ test('Contact Us Form', async({ page }) => {
     
     await pm.contactUsPage.fillInquiryInfo(
         inquiryData.name, 
-        inquiryData.email, 
+        inquiryData.emailAddress, 
         inquiryData.subject, 
         inquiryData.message)
     await pm.contactUsPage.uploadFile()

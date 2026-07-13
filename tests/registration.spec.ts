@@ -34,7 +34,7 @@ test.describe('Registration', () => {
   })
 
   test('Register User with existing email', async () => {
-    await pm.loginPage.register('someUsername', existingUser.email)
+    await pm.loginPage.register('someUsername', existingUser.emailAddress)
     await expect(pm.loginPage.emailAlredyExistsText).toBeVisible()
   })
 })

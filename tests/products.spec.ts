@@ -35,7 +35,7 @@ test.describe('Product Details Page', () => {
     test('Add review on product', async ({page}) => {
         await pm.productsPage.clickViewProduct(itemIndex)
         await expect(page).toHaveURL(productReference!)
-        await pm.productDetailsPage.addReview(reviewData.name, reviewData.email, reviewData.review)
+        await pm.productDetailsPage.addReview(reviewData.name, reviewData.emailAddress, reviewData.review)
         await expect(pm.productDetailsPage.thankYouForYourReviewMessage).toBeVisible()
     })
 

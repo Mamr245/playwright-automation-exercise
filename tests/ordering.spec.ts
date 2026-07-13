@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test"
 import { PageManager } from "../page-objects/pageManager"
-import { cardData, newUserData } from "../fixtures/testData"
+import { creditCardData, newUserData } from "../fixtures/testData"
 
 let pm: PageManager
   /* 
@@ -109,11 +109,11 @@ test('Place Order: Register while Checkout', async() => {
 
     // Fill card details and confirm order
     await pm.paymentPage.fillPaymentDetails(
-      cardData.name,
-      cardData.number,
-      cardData.cvc,
-      cardData.expiryMonth,
-      cardData.expiryYear
+      creditCardData.name,
+      creditCardData.number,
+      creditCardData.cvc,
+      creditCardData.expiryMonth,
+      creditCardData.expiryYear
     )
     await pm.paymentPage.clickPayAndConfirmOrderButton()
     await expect(pm.paymentDonePage.orderPlacedText).toBeVisible()
