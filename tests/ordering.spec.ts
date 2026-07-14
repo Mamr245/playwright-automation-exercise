@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test"
 import { PageManager } from "../page-objects/pageManager"
 import { creditCardData, newUserData } from "../fixtures/testData"
+import { existingUser } from "../fixtures/testData"
+
 
 let pm: PageManager
   /* 
@@ -268,6 +270,85 @@ test.describe('Ordering', () => {
     await pm.homePage.clickDeleteAccountLink()
     await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
     await pm.accountDeletedPage.clickContinueButton()
+  })
+
+  test('Login before Checkout', async({ page }) => {
+    // Login with valid credentials
+    await pm.homePage.clickSignUpLink()
+    await expect(pm.loginPage.loginToYourAccountText).toBeVisible()
+    await pm.loginPage.login(existingUser.emailAddress, existingUser.accountInformation.password)
+    await expect(pm.homePage.loggedInAsUserText).toContainText(existingUser.username)
+
+    // Add products to cart
+    const itemIndexes = [0, 1]
+    for (const itemIndex of itemIndexes) {
+      await pm.homePage.addProductToCart(itemIndex, referenceCart)
+      await pm.homePage.clickContinueShoppingButton()
+    }
+
+    // Go to cart page and check all items are there
+    await pm.homePage.clickCartLink()
+    const numberOfItems = await pm.cartPage.getCartNumberOfItems()
+    expect(numberOfItems).toEqual(referenceCart.length)
+
+    // Start Checkout
+    await pm.cartPage.clickProceedToCheckoutLink()
+
+    // Validate delivery address details
+    await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(existingUser.accountInformation.title)
+    await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(existingUser.addressInformation.firstName)
+    await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(existingUser.addressInformation.lastName)
+    await expect(pm.checkoutPage.deliveryAddress_CompanyName).toContainText(existingUser.addressInformation.company)
+    await expect(pm.checkoutPage.deliveryAddress_StreetAndNumber).toContainText(existingUser.addressInformation.address)
+    await expect(pm.checkoutPage.deliveryAddress_AptInfo).toContainText(existingUser.addressInformation.address2)
+    await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(existingUser.addressInformation.city)
+    await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(existingUser.addressInformation.state)
+    await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(existingUser.addressInformation.zipCode)
+    await expect(pm.checkoutPage.deliveryAddress_Country).toContainText(existingUser.addressInformation.country)
+    await expect(pm.checkoutPage.deliveryAddress_mobileNumber).toContainText(existingUser.addressInformation.mobileNumber)
+
+    // Validate billing address details
+    await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(existingUser.accountInformation.title)
+    await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(existingUser.addressInformation.firstName)
+    await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(existingUser.addressInformation.lastName)
+    await expect(pm.checkoutPage.billingAddress_CompanyName).toContainText(existingUser.addressInformation.company)
+    await expect(pm.checkoutPage.billingAddress_StreetAndNumber).toContainText(existingUser.addressInformation.address)
+    await expect(pm.checkoutPage.billingAddress_AptInfo).toContainText(existingUser.addressInformation.address2)
+    await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(existingUser.addressInformation.city)
+    await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(existingUser.addressInformation.state)
+    await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(existingUser.addressInformation.zipCode)
+    await expect(pm.checkoutPage.billingAddress_Country).toContainText(existingUser.addressInformation.country)
+    await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(existingUser.addressInformation.mobileNumber)
+
+    // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
+    for (let i = 0; i < numberOfItems; i++) {
+      const itemDescription = await pm.checkoutPage.getItemDescription(i)
+      const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
+      expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
+      expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
+      expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
+    }
+
+    // Validate total amount to be charged
+    const totalOrderAmount = (referenceCart as any[]).reduce((sum, item) => sum + item.totalPrice, 0)
+    expect(pm.checkoutPage.totalOrderAmount).toContainText(`Rs. ${totalOrderAmount}`)
+
+    // Enter comment and click "place order"
+    await pm.checkoutPage.typeComment('This order MUST arrive on time! Thank you!')
+    await pm.checkoutPage.clickPlaceOrderButton()
+
+    // Fill credit card details and confirm order
+    await pm.paymentPage.fillPaymentDetails(
+      creditCardData.name,
+      creditCardData.number,
+      creditCardData.cvc,
+      creditCardData.expiryMonth,
+      creditCardData.expiryYear
+    )
+    await pm.paymentPage.clickPayAndConfirmOrderButton()
+    await expect(pm.paymentDonePage.orderPlacedText).toBeVisible()
+    await pm.paymentDonePage.clickContinueButton()
+    await expect(page).toHaveURL('/')
   })
 
   test('Download Invoice after purchase order', async({ page }) => {

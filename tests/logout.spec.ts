@@ -13,7 +13,7 @@ test('User can logout successfully', async ({ page }) => {
         await pm.homePage.clickSignUpLink()
         await expect(pm.loginPage.loginToYourAccountText).toBeVisible()
         
-        await pm.loginPage.login(existingUser.emailAddress, existingUser.password)
+        await pm.loginPage.login(existingUser.emailAddress, existingUser.accountInformation.password)
         await expect(pm.homePage.loggedInAsUserText).toContainText(existingUser.username)
 
         await pm.homePage.clickLogoutLink()

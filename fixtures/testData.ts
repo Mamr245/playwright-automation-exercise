@@ -24,9 +24,33 @@ export const newUserData = {
 
 export const existingUser = {
     username: 'validUser',
+    emailAddress: 'anotherValidEmail@example.com',
+    accountInformation: {
+        title: 'Mrs.',
+        password: '123456fg!.',
+        dayOfBirth: '5',
+        monthOfBirth: 'May',
+        yearOfBirth: '1992'
+    },
+    addressInformation: {
+        firstName: 'Special',
+        lastName: 'Someone',
+        company: 'Special Company',
+        address: '524 Washington Blvd',
+        address2: 'Apt 10D',
+        country: 'United States',
+        state: 'Connecticut',
+        city: 'Stamford',
+        zipCode: '36987',
+        mobileNumber: '123-456-7890',
+    }
+}
+/*
+export const existingUser = {
+    username: 'validUser',
     emailAddress: 'validEmail@example.com',
     password: '123456fg!.'
-} 
+}  */
 
 export const emailToSubscribe = 'randyOrton@example.com'
 
