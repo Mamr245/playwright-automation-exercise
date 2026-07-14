@@ -45,14 +45,8 @@ export const existingUser = {
         mobileNumber: '123-456-7890',
     }
 }
-/*
-export const existingUser = {
-    username: 'validUser',
-    emailAddress: 'validEmail@example.com',
-    password: '123456fg!.'
-}  */
 
-export const emailToSubscribe = 'randyOrton@example.com'
+export const emailToSubscribe = `randyOrton${Date.now()}@example.com`
 
 export const inquiryData = {
     name: 'Wilson Smith',
