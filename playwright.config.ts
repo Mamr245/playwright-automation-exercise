@@ -15,6 +15,10 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     testIdAttribute: 'data-qa',
     trace: 'on-first-retry',
+    viewport: null,
+    launchOptions: {
+      args: ['--start-maximized'],
+    }
   },
   projects: [
     {
