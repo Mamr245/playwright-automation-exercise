@@ -270,7 +270,7 @@ test.describe('Ordering', () => {
     await pm.accountDeletedPage.clickContinueButton()
   })
 
-  /*test('Download Invoice after purchase order', async() => {
+  test('Download Invoice after purchase order', async({ page }) => {
     // Add products to cart
     const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
@@ -354,11 +354,16 @@ test.describe('Ordering', () => {
     )
     await pm.paymentPage.clickPayAndConfirmOrderButton()
     await expect(pm.paymentDonePage.orderPlacedText).toBeVisible()
-    await pm.paymentDonePage.clickContinueButton()
+
+    // Download invoice
+    const downloadPromise = page.waitForEvent('download');
+    await pm.paymentDonePage.clickDownloadInvoiceButton()
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toBe('invoice.txt');
 
     // Delete account
     await pm.homePage.clickDeleteAccountLink()
     await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
     await pm.accountDeletedPage.clickContinueButton()
-  }) */
+  })
 })
