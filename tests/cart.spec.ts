@@ -54,9 +54,9 @@ test.describe('Cart', () => {
   test('Verify Product quantity in Cart', async({ page }) => {
     const itemIndex = 2
     const itemQuantity = 4
-    const productReference = await pm.productsPage.getProductReference(itemIndex)
+    const productReference = await pm.homePage.getProductReference(itemIndex)
 
-    await pm.productsPage.clickViewProduct(itemIndex)
+    await pm.homePage.clickViewProduct(itemIndex)
     await expect(page).toHaveURL(productReference!)
     await pm.productDetailsPage.addToCart(itemQuantity)
     await pm.productDetailsPage.clickViewCartLink()
@@ -68,12 +68,12 @@ test.describe('Cart', () => {
     // Add products to cart
     const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
-      await pm.productsPage.addProductToCart(itemIndex, referenceCart)
-      await pm.productsPage.clickContinueShoppingButton()
+      await pm.homePage.addProductToCart(itemIndex, referenceCart)
+      await pm.homePage.clickContinueShoppingButton()
     }
 
     // Go to cart page and check all items are there
-    await pm.productsPage.clickCartLink()
+    await pm.homePage.clickCartLink()
     const numberOfItems = await pm.cartPage.getCartNumberOfItems()
     expect(numberOfItems).toEqual(referenceCart.length)
 

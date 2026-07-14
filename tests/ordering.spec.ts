@@ -14,7 +14,7 @@ let pm: PageManager
   */ 
 let referenceCart: object[]
 
-test.describe('Registration', () => {
+test.describe('Ordering', () => {
   test.beforeEach(async ({ page }) => {
     pm = new PageManager(page)
     await pm.homePage.goTo()
@@ -23,17 +23,15 @@ test.describe('Registration', () => {
   })
 
   test('Place Order: Register while Checkout', async() => {
-    await pm.homePage.clickProductsLink()
-
     // Add products to cart
     const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
-      await pm.productsPage.addProductToCart(itemIndex, referenceCart)
-      await pm.productsPage.clickContinueShoppingButton()
+      await pm.homePage.addProductToCart(itemIndex, referenceCart)
+      await pm.homePage.clickContinueShoppingButton()
     }
 
     // Go to cart page and check all items are there
-    await pm.productsPage.clickCartLink()
+    await pm.homePage.clickCartLink()
     const numberOfItems = await pm.cartPage.getCartNumberOfItems()
     expect(numberOfItems).toEqual(referenceCart.length)
 
@@ -138,12 +136,12 @@ test.describe('Registration', () => {
     // Add products to cart
     const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
-      await pm.productsPage.addProductToCart(itemIndex, referenceCart)
-      await pm.productsPage.clickContinueShoppingButton()
+      await pm.homePage.addProductToCart(itemIndex, referenceCart)
+      await pm.homePage.clickContinueShoppingButton()
     }
 
     // Go to cart page and check all items are there
-    await pm.productsPage.clickCartLink()
+    await pm.homePage.clickCartLink()
     const numberOfItems = await pm.cartPage.getCartNumberOfItems()
     expect(numberOfItems).toEqual(referenceCart.length)
 
@@ -199,12 +197,12 @@ test.describe('Registration', () => {
     await pm.homePage.clickProductsLink()
     const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
-      await pm.productsPage.addProductToCart(itemIndex, referenceCart)
-      await pm.productsPage.clickContinueShoppingButton()
+      await pm.homePage.addProductToCart(itemIndex, referenceCart)
+      await pm.homePage.clickContinueShoppingButton()
     }
 
     // Go to cart page and check all items are there
-    await pm.productsPage.clickCartLink()
+    await pm.homePage.clickCartLink()
     const numberOfItems = await pm.cartPage.getCartNumberOfItems()
     expect(numberOfItems).toEqual(referenceCart.length)
 
@@ -272,18 +270,16 @@ test.describe('Registration', () => {
     await pm.accountDeletedPage.clickContinueButton()
   })
 
-  /*test('Place Order: Register while Checkout', async() => {
-    await pm.homePage.clickProductsLink()
-
+  /*test('Download Invoice after purchase order', async() => {
     // Add products to cart
     const itemIndexes = [0, 1]
     for (const itemIndex of itemIndexes) {
-      await pm.productsPage.addProductToCart(itemIndex, referenceCart)
-      await pm.productsPage.clickContinueShoppingButton()
+      await pm.homePage.addProductToCart(itemIndex, referenceCart)
+      await pm.homePage.clickContinueShoppingButton()
     }
 
     // Go to cart page and check all items are there
-    await pm.productsPage.clickCartLink()
+    await pm.homePage.clickCartLink()
     const numberOfItems = await pm.cartPage.getCartNumberOfItems()
     expect(numberOfItems).toEqual(referenceCart.length)
 
@@ -364,5 +360,5 @@ test.describe('Registration', () => {
     await pm.homePage.clickDeleteAccountLink()
     await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
     await pm.accountDeletedPage.clickContinueButton()
-  })*/
+  }) */
 })
