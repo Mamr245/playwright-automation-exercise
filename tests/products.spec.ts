@@ -4,7 +4,7 @@ import { reviewData } from "../fixtures/testData"
 
 let pm: PageManager
 let itemIndex: number
-let productReference: string | null
+let productReference: string
 
 test.beforeEach(async ({ page }) => {
     pm = new PageManager(page)
@@ -24,7 +24,7 @@ test.describe('Product Details Page', () => {
     test('Verify All Products and product detail page', async ({page}) => {
         await pm.productsPage.clickViewProduct(itemIndex)
         // The non-null assertion (!) tells TypeScript that productReference cannot be null here.
-        await expect(page).toHaveURL(productReference!) //The exclamation mark indicates that productReference is surely not null
+        await expect(page).toHaveURL(productReference) //The exclamation mark indicates that productReference is surely not null
         // /\S+/ => regex expression to match one or more non-whitespace characters
         await expect(pm.productDetailsPage.productName).toHaveText(/\S+/) 
         await expect(pm.productDetailsPage.productCategory).toBeVisible()
