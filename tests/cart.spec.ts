@@ -22,17 +22,22 @@ test.describe('Cart', () => {
   })
 
   test('Add Products in Cart', async() => {
+    // Go to products page
     await pm.homePage.clickProductsLink()
 
-    // Add products to cart
+    // Add products to cart amd go to cart after adding the last one
     const itemIndexes = [0, 1]
-    for (const itemIndex of itemIndexes) {
+    for (const [index, itemIndex] of itemIndexes.entries()) {
+      const isLast = index === itemIndexes.length - 1;
       await pm.productsPage.addProductToCart(itemIndex, referenceCart)
-      await pm.productsPage.clickContinueShoppingButton()
+      if (!isLast) {
+        await pm.productsPage.clickContinueShoppingButton();
+      } else {
+        await pm.productsPage.clickViewCartLink()
+      }
     }
 
     // Go to cart page and check all items are there
-    await pm.productsPage.clickCartLink()
     const numberOfItems = await pm.cartPage.getCartNumberOfItems()
     expect(numberOfItems).toEqual(referenceCart.length)
 
