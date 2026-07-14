@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test"
 import { PageManager } from "../page-objects/pageManager"
 import { creditCardData, newUserData } from "../fixtures/testData"
 import { existingUser } from "../fixtures/testData"
+import { Product } from "../types/product"
 
 
 let pm: PageManager
@@ -10,11 +11,11 @@ let pm: PageManager
   * It will contain necessary info about the items added to cart
   * Example:
   * [
-  *   { name: 'Blue Top', price: 500, totalQuantity: 1, totalPrice: 500 },
-  *   { name: 'Men Tshirt', price: 400, totalQuantity: 1, totalPrice: 400 }
+  *   {name: 'Blue Top', productReference: '/product_details/1', price: 500, totalQuantity: 1, totalPrice: 500},
+  *   {name: 'Men Tshirt', productReference: '/product_details/2', price: 400, totalQuantity: 1, totalPrice: 400}
   * ]
   */ 
-let referenceCart: object[]
+let referenceCart: Product[]
 
 test.beforeEach(async ({ page }) => {
   pm = new PageManager(page)
@@ -83,14 +84,14 @@ test('Place Order: Register while Checkout', async() => {
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
   for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
-    const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
-    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
-    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
-    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
   }
 
   // Validate total amount to be charged
-  const totalOrderAmount = (referenceCart as any[]).reduce((sum, item) => sum + item.totalPrice, 0)
+  const totalOrderAmount = (referenceCart).reduce((sum, item) => sum + item.totalPrice, 0)
   expect(pm.checkoutPage.totalOrderAmount).toContainText(`Rs. ${totalOrderAmount}`)
 
   // Enter comment and click "place order"
@@ -173,14 +174,14 @@ test('Place Order: Register before Checkout', async() => {
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
   for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
-    const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
-    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
-    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
-    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
   }
 
   // Validate total amount to be charged
-  const totalOrderAmount = (referenceCart as any[]).reduce((sum, item) => sum + item.totalPrice, 0)
+  const totalOrderAmount = (referenceCart).reduce((sum, item) => sum + item.totalPrice, 0)
   expect(pm.checkoutPage.totalOrderAmount).toContainText(`Rs. ${totalOrderAmount}`)
 
   // Enter comment and click "place order"
@@ -322,14 +323,14 @@ test('Login before Checkout', async({ page }) => {
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
   for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
-    const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
-    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
-    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
-    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
   }
 
   // Validate total amount to be charged
-  const totalOrderAmount = (referenceCart as any[]).reduce((sum, item) => sum + item.totalPrice, 0)
+  const totalOrderAmount = (referenceCart).reduce((sum, item) => sum + item.totalPrice, 0)
   expect(pm.checkoutPage.totalOrderAmount).toContainText(`Rs. ${totalOrderAmount}`)
 
   // Enter comment and click "place order"
@@ -410,14 +411,14 @@ test('Download Invoice after purchase order', async({ page }) => {
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
   for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
-    const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
-    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
-    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
-    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.checkoutPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.checkoutPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
   }
 
   // Validate total amount to be charged
-  const totalOrderAmount = (referenceCart as any[]).reduce((sum, item) => sum + item.totalPrice, 0)
+  const totalOrderAmount = (referenceCart).reduce((sum, item) => sum + item.totalPrice, 0)
   expect(pm.checkoutPage.totalOrderAmount).toContainText(`Rs. ${totalOrderAmount}`)
 
   // Enter comment and click "place order"

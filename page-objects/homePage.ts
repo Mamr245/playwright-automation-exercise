@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test"
+import { Product } from "../types/product"
 
 export class HomePage {
     constructor(protected readonly page: Page) {}
@@ -21,6 +22,10 @@ export class HomePage {
 
     get subscriptionSuccessMessage() {
         return this.page.getByText('You have been successfully subscribed!')
+    }
+
+    get recommendedItemsText() {
+        return this.page.getByText('recommended items')
     }
 
     get fullFledgedText() {
@@ -96,29 +101,52 @@ export class HomePage {
         await this.page.getByRole('button', {name: 'Continue Shopping'}).click()
     }
 
-    async getProductReference(itemIndex: number) {
-        return this.page.getByRole('link', {name: 'View product'}).nth(itemIndex).getAttribute('href')
+    async getProductReference(itemIndex: number, itemSection?: string) { 
+        if (itemSection === 'recommended') {
+            return (await this.page
+                .locator('//div[@class="recommended_items"]//div[@class="item active"]//img')
+                .nth(itemIndex).getAttribute('src'))!
+                .replace('get_product_picture', '/product_details')
+        } else {
+            return (await this.page.getByRole('link', {name: 'View product'}).nth(itemIndex).getAttribute('href'))!
+        }
     }
 
-    async addProductToCart(itemIndex: number, cart: object[]) {
-        await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]').nth(itemIndex).hover()
-        await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//a').nth(itemIndex).click()
-        await this.updateCartArray(itemIndex, cart)
+    async addProductToCart(itemIndex: number, cart: Product[], itemSection?: string) {
+        if (itemSection === 'recommended') {
+            await this.page.locator('.recommended_items .item.active .single-products a').nth(itemIndex).click()
+            await this.updateCartArray(itemIndex, cart, itemSection)
+        } else {
+            await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]').nth(itemIndex).hover()
+            await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//a').nth(itemIndex).click()
+            await this.updateCartArray(itemIndex, cart)
+        }  
     }
 
-    protected async updateCartArray(itemIndex: number, cart: object[]) {
+    protected async updateCartArray(itemIndex: number, cart: Product[], itemSection?: string) {
         /* Steps to update the cart object to perform assertions later:
-        *    1 - Get item name and price
+        *    1 - Get item name, price and reference
         *    2 - Check if item is already in the cart 
         *        - If yes => Increase it's quantity by 1
         *        - If not => Add it to the cart with quantity equal to 1
         */
-        const itemName = await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//p').nth(itemIndex).innerText()
-        const itemPrice = await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//h2').nth(itemIndex).innerText()
+        let itemName
+        let itemPrice
+        let productReference
+
+        if (itemSection === 'recommended') {
+            itemName = await this.page.locator('//div[@class="recommended_items"]//div[@class="item active"]//div[@class="single-products"]//p').nth(itemIndex).innerText()
+            itemPrice = await this.page.locator('//div[@class="recommended_items"]//div[@class="item active"]//div[@class="single-products"]//h2').nth(itemIndex).innerText()
+            productReference = await this.getProductReference(itemIndex, 'recommended')
+        } else {
+            itemName = await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//p').nth(itemIndex).innerText()
+            itemPrice = await this.page.locator('//div[@class="features_items"]/div[@class="col-sm-4"]//div[@class="product-overlay"]//h2').nth(itemIndex).innerText()
+            productReference = await this.getProductReference(itemIndex)
+        }
+        
         const priceValue = Number(itemPrice.replace("Rs. ", ""))
-        const productReference = await this.getProductReference(itemIndex)
         const product = {name: itemName, productReference: productReference, price: priceValue, totalQuantity: 1, totalPrice: priceValue}
-        const itemAlreadyInCart = cart.find((item: any) => item.name === itemName) as any
+        const itemAlreadyInCart = cart.find((item) => item.name === itemName)
 
         if (itemAlreadyInCart) {
             itemAlreadyInCart.totalQuantity++

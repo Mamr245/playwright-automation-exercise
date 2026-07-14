@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
+import { Product } from '../types/product';
 
 let pm: PageManager
   /* 
@@ -7,11 +8,11 @@ let pm: PageManager
   * It will contain necessary info about the items added to cart
   * Example:
   * [
-  *   { name: 'Blue Top', price: 500, totalQuantity: 1, totalPrice: 500 },
-  *   { name: 'Men Tshirt', price: 400, totalQuantity: 1, totalPrice: 400 }
+  *   {name: 'Blue Top', productReference: '/product_details/1', price: 500, totalQuantity: 1, totalPrice: 500},
+  *   {name: 'Men Tshirt', productReference: '/product_details/2', price: 400, totalQuantity: 1, totalPrice: 400}
   * ]
   */ 
-let referenceCart: object[]
+let referenceCart: Product[]
 
 test.beforeEach(async ({ page }) => {
   pm = new PageManager(page)
@@ -43,10 +44,10 @@ test('Add Products in Cart', async() => {
   // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
   for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
-    const referenceItemData = referenceCart.find((item: any) => item.name === itemDescription) as any
-    expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData.price}`)
-    expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData.totalQuantity}`)
-    expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData.totalPrice}`)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
   }
 })
 
@@ -81,4 +82,16 @@ test('Remove products from cart', async() => {
   console.log(itemToRemoveReference)
   await pm.cartPage.removeItem(0)
   await expect(pm.cartPage.cartTable).not.toContainText(itemToRemoveReference!)
+})
+
+test('Add to cart from Recommended items', async() => {
+  // Go to Recommended Items section
+  await pm.homePage.footer.scrollIntoViewIfNeeded()
+  await expect(pm.homePage.recommendedItemsText).toBeVisible()
+
+  // Add product to cart
+  const itemIndex = 1
+  await pm.homePage.addProductToCart(itemIndex, referenceCart, 'recommended')
+  await pm.homePage.clickViewCartLink()
+  expect(await pm.cartPage.getItemReference(0)).toContain(referenceCart[0].productReference) 
 })
