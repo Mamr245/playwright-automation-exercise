@@ -50,7 +50,11 @@ export class HomePage {
     }
 
     async clickCartLink() {
-        await this.page.getByRole('link', {name: 'Cart'}).click()
+        await this.page.locator('//header[@id="header"]//a[@href="/view_cart"]').click()
+    }
+
+    async clickViewCartLink() {
+        await this.page.getByRole('link', {name: 'View Cart'}).click()
     }
 
     async clickProductsLink() {
