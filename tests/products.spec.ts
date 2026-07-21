@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
     await expect(pm.homePage.header).toBeVisible()
 })
 
-test.describe('Product Details Page', () => {
+test.describe('Products and Product Details Page', () => {
     test.beforeEach(async () => {
         await pm.homePage.clickProductsLink()
         await expect(pm.productsPage.allProductsText).toBeVisible()
@@ -53,16 +53,32 @@ test.describe('Product Details Page', () => {
             expect(searchResult).toMatch(new RegExp(textToSearch, "i")) 
         })
     })
+
+    test('View & Cart Brand Products', async() => {
+        let brand = 'Polo'
+        let brandProcuts = ['Fancy Green Top', 'Green Side Placket Detail T-Shirt', 'Grunt Blue Slim Fit Jeans']
+
+        await expect(pm.productsPage.brandsText).toBeVisible()
+        await pm.homePage.clickBrand(brand)
+        await expect(pm.brandProductsPage.brandSectionTitle).toHaveText(`Brand - ${brand} Products`)
+        for (const productName of brandProcuts) {
+            await expect(pm.brandProductsPage.productCard(productName)).toBeVisible()
+        }
+
+        brand = 'Mast & Harbour'
+        brandProcuts = ['Winter Top', 'Lace Top For Women', 'GRAPHIC DESIGN MEN T SHIRT - BLUE']
+        await pm.brandProductsPage.clickBrand(brand)
+        await expect(pm.brandProductsPage.brandSectionTitle).toHaveText(`Brand - ${brand} Products`)
+        for (const productName of brandProcuts) {
+            await expect(pm.brandProductsPage.productCard(productName)).toBeVisible()
+        }
+    })
 })
 
 test('View Category Products', async() => {
+    await expect(pm.homePage.categoryText).toBeVisible()
     await pm.homePage.clickCategory('Women', 'TOPS')
     await expect(pm.categoryProductsPage.womenTopsProductsText).toBeVisible()
     await pm.categoryProductsPage.clickCategory('Men', 'JEANS')
     await expect(pm.categoryProductsPage.menJeansProductsText).toBeVisible()
 })
-
-/*test('View & Cart Brand Products', async() => {
-    await expect(pm.productsPage.brandsText).toBeVisible()
-    await pm.homePage.clickBrand('POLO')
-})*/

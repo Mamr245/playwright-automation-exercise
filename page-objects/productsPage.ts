@@ -9,10 +9,6 @@ export class ProductsPage extends HomePage {
         return this.page.getByText('Searched Products')
     }
 
-    get brandsText() {
-        return this.page.getByText('Brands')
-    }
-
     async getSearchResults() {
         return await this.page.locator('//*[@class="productinfo text-center"]//p').allInnerTexts()
     }

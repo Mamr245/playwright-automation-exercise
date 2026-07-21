@@ -33,6 +33,14 @@ export class HomePage {
         return this.page.locator("//*[@class='item active' and contains(., 'Full-Fledged')]")
     }
 
+    get categoryText() {
+        return this.page.locator('.left-sidebar').getByText('Category')
+    }
+
+    get brandsText() {
+        return this.page.locator('.left-sidebar').getByText('Brands')
+    }
+
     async goTo() {
         await this.page.goto("/")
         await this.clickConsentButton()
