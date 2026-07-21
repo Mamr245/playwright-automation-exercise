@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/fixture";
+import { test, expect } from "../fixtures/fixture"
 import { PageManager } from "../page-objects/pageManager"
 import { creditCardData, newUserData } from "../fixtures/testData"
 import { existingUser } from "../fixtures/testData"
@@ -82,7 +82,7 @@ test('Place Order: Register while Checkout', async() => {
   await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
 
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -172,7 +172,7 @@ test('Place Order: Register before Checkout', async() => {
   await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
 
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -255,7 +255,7 @@ test('Place Order: Login before Checkout', async({ page }) => {
   await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(existingUser.addressInformation.mobileNumber)
 
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -409,7 +409,7 @@ test('Download Invoice after purchase order', async({ page }) => {
   await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
 
   // For each item in the order review table, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.checkoutPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.checkoutPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)

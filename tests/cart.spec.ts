@@ -1,7 +1,7 @@
-import { test, expect } from "../fixtures/fixture";
-import { PageManager } from '../page-objects/pageManager';
-import { Product } from '../types/product';
-import { existingUser } from '../fixtures/testData';
+import { test, expect } from "../fixtures/fixture"
+import { PageManager } from '../page-objects/pageManager'
+import { Product } from '../types/product'
+import { existingUser } from '../fixtures/testData'
 
 let pm: PageManager
   /* 
@@ -29,10 +29,10 @@ test('Add Products in Cart', async() => {
   // Add products to cart and go to cart after adding the last one
   const itemIndexes = [0, 1]
   for (const [index, itemIndex] of itemIndexes.entries()) {
-    const isLast = index === itemIndexes.length - 1;
+    const isLast = index === itemIndexes.length - 1
     await pm.productsPage.addProductToCart(itemIndex, referenceCart)
     if (!isLast) {
-      await pm.productsPage.clickContinueShoppingButton();
+      await pm.productsPage.clickContinueShoppingButton()
     } else {
       await pm.productsPage.clickViewCartLink()
     }
@@ -43,7 +43,7 @@ test('Add Products in Cart', async() => {
   expect(numberOfItems).toEqual(referenceCart.length)
 
   // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -114,11 +114,11 @@ test('Search Products and Verify Cart After Login', async() => {
   })
 
   // Add items to cart
-  for (let itemIndex = 0; itemIndex < searchResults.length; itemIndex++ ) {
-    const isLast = itemIndex === searchResults.length - 1;
+  for (let itemIndex = 0 itemIndex < searchResults.length itemIndex++ ) {
+    const isLast = itemIndex === searchResults.length - 1
     await pm.productsPage.addProductToCart(itemIndex, referenceCart)
     if (!isLast) {
-      await pm.productsPage.clickContinueShoppingButton();
+      await pm.productsPage.clickContinueShoppingButton()
     } else {
       await pm.productsPage.clickViewCartLink()
     }
@@ -129,7 +129,7 @@ test('Search Products and Verify Cart After Login', async() => {
   expect(numberOfItems).toEqual(referenceCart.length)
 
   // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -148,7 +148,7 @@ test('Search Products and Verify Cart After Login', async() => {
   numberOfItems = await pm.cartPage.getCartNumberOfItems()
   expect(numberOfItems).toEqual(referenceCart.length)
 
-  for (let i = 0; i < numberOfItems; i++) {
+  for (let i = 0 i < numberOfItems i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)

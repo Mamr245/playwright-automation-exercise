@@ -1,4 +1,4 @@
-import { HomePage } from "./homePage";
+import { HomePage } from "./homePage"
 
 export class CategoryProductsPage extends HomePage {
     get womenTopsProductsText() {

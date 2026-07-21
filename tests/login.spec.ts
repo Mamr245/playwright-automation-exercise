@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/fixture";
+import { test, expect } from "../fixtures/fixture"
 import { PageManager } from "../page-objects/pageManager" 
 import { existingUser } from "../fixtures/testData"
 

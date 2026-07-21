@@ -1,6 +1,6 @@
-import { test, expect } from "../fixtures/fixture";
-import { PageManager } from '../page-objects/pageManager';
-import { newUserData, existingUser } from '../fixtures/testData';
+import { test, expect } from "../fixtures/fixture"
+import { PageManager } from '../page-objects/pageManager'
+import { newUserData, existingUser } from '../fixtures/testData'
 
 let pm: PageManager
 

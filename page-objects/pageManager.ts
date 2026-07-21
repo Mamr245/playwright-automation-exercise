@@ -1,18 +1,18 @@
-import { Page } from "@playwright/test";
-import { HomePage } from "./homePage";
-import { LoginPage } from "./loginPage";
-import { SignUpPage } from "./signUpPage";
-import { AccountCreatedPage } from "./accountCreatedPage";
-import { AccountDeletedPage } from "./accountDeletedPage";
-import { ContactUsPage } from "./contactUsPage";
-import { CartPage } from "./cartPage";
-import { ProductsPage } from "./productsPage";
-import { ProductDetailsPage } from "./productDetailPage";
-import { CheckoutPage } from "./checkoutPage";
-import { PaymentPage } from "./paymentPage";
-import { PaymentDonePage } from "./paymentDonePage";
-import { CategoryProductsPage } from "./categoryProductsPage";
-import { BrandProductsPage } from "./brandProductsPage";
+import { Page } from "@playwright/test"
+import { HomePage } from "./homePage"
+import { LoginPage } from "./loginPage"
+import { SignUpPage } from "./signUpPage"
+import { AccountCreatedPage } from "./accountCreatedPage"
+import { AccountDeletedPage } from "./accountDeletedPage"
+import { ContactUsPage } from "./contactUsPage"
+import { CartPage } from "./cartPage"
+import { ProductsPage } from "./productsPage"
+import { ProductDetailsPage } from "./productDetailPage"
+import { CheckoutPage } from "./checkoutPage"
+import { PaymentPage } from "./paymentPage"
+import { PaymentDonePage } from "./paymentDonePage"
+import { CategoryProductsPage } from "./categoryProductsPage"
+import { BrandProductsPage } from "./brandProductsPage"
 
 export class PageManager {
 
