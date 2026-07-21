@@ -9,12 +9,8 @@ export class ProductsPage extends HomePage {
         return this.page.getByText('Searched Products')
     }
 
-    get womenTopsProductsText() {
-        return this.page.getByText('Women - Tops Products')
-    }
-    
-    get menJeansProductsText() {
-        return this.page.getByText('Men - Jeans Products')
+    get brandsText() {
+        return this.page.getByText('Brands')
     }
 
     async getSearchResults() {

@@ -55,9 +55,14 @@ test.describe('Product Details Page', () => {
     })
 })
 
-test('View Category Products', async () => {
+test('View Category Products', async() => {
     await pm.homePage.clickCategory('Women', 'TOPS')
-    await expect(pm.productsPage.womenTopsProductsText).toBeVisible()
-    await pm.productsPage.clickCategory('Men', 'JEANS')
-    await expect(pm.productsPage.menJeansProductsText).toBeVisible()
+    await expect(pm.categoryProductsPage.womenTopsProductsText).toBeVisible()
+    await pm.categoryProductsPage.clickCategory('Men', 'JEANS')
+    await expect(pm.categoryProductsPage.menJeansProductsText).toBeVisible()
 })
+
+/*test('View & Cart Brand Products', async() => {
+    await expect(pm.productsPage.brandsText).toBeVisible()
+    await pm.homePage.clickBrand('POLO')
+})*/

@@ -88,6 +88,10 @@ export class HomePage {
         await this.page.locator(`#${category}`).getByRole('link', { name: productType }).click()
     }
 
+    async clickBrand(brand: string) {
+        await this.page.getByRole('link', { name: brand }).click()
+    }
+
     async clickViewProduct(itemIndex: number) {
         /* 
         * itemIndex = 0 clicks "View Product" of first item

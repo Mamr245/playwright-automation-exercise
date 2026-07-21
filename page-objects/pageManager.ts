@@ -11,6 +11,7 @@ import { ProductDetailsPage } from "./productDetailPage";
 import { CheckoutPage } from "./checkoutPage";
 import { PaymentPage } from "./paymentPage";
 import { PaymentDonePage } from "./paymentDonePage";
+import { CategoryProductsPage } from "./categoryProductsPage";
 
 export class PageManager {
 
@@ -27,6 +28,7 @@ export class PageManager {
     private readonly _checkoutPage: CheckoutPage
     private readonly _paymentPage: PaymentPage
     private readonly _paymentDonePage: PaymentDonePage
+    private readonly _categoryProductsPage: CategoryProductsPage
 
     constructor(page: Page) {
         this._page = page
@@ -42,6 +44,7 @@ export class PageManager {
         this._checkoutPage = new CheckoutPage(this._page)
         this._paymentPage = new PaymentPage(this._page)
         this._paymentDonePage = new PaymentDonePage(this._page)
+        this._categoryProductsPage = new CategoryProductsPage(this._page)
     }
 
     get homePage() {
@@ -90,5 +93,9 @@ export class PageManager {
 
     get paymentDonePage() {
         return this._paymentDonePage
+    }
+
+    get categoryProductsPage() {
+        return this._categoryProductsPage
     }
 }
