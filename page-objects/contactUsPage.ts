@@ -20,13 +20,17 @@ export class ContactUsPage {
 
     async uploadFile(filePath: string) {
         await this.page.locator('input[type="file"]').setInputFiles(filePath)
+        /*
+        *Automation Exercise processes the file input asynchronously;
+        *wait briefly before submitting to avoid a race condition
+        */
+        await this.page.waitForTimeout(300)
     }
 
     async submitInquiry () {
         this.page.once('dialog', async dialog => {
             await dialog.accept()
         })
-        //await this.page.locator('.google-anno-skip.google-anno-sc').waitFor()
         await this.page.getByTestId('submit-button').click()
     }
 
