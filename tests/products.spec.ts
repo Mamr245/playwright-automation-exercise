@@ -59,7 +59,7 @@ test.describe('Products and Product Details Page', () => {
         let brandProcuts = ['Fancy Green Top', 'Green Side Placket Detail T-Shirt', 'Grunt Blue Slim Fit Jeans']
 
         await expect(pm.productsPage.brandsText).toBeVisible()
-        await pm.homePage.clickBrand(brand)
+        await pm.productsPage.clickBrand(brand)
         await expect(pm.brandProductsPage.brandSectionTitle).toHaveText(`Brand - ${brand} Products`)
         for (const productName of brandProcuts) {
             await expect(pm.brandProductsPage.productCard(productName)).toBeVisible()
