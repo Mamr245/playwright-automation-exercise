@@ -80,7 +80,6 @@ test('Remove products from cart', async() => {
 
   // Remove first item and validate correct item was removed
   const itemToRemoveReference = await pm.cartPage.getItemReference(0)
-  console.log(itemToRemoveReference)
   await pm.cartPage.removeItem(0)
   await expect(pm.cartPage.cartTable).not.toContainText(itemToRemoveReference!)
 })
