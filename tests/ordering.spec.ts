@@ -206,73 +206,7 @@ test('Place Order: Register before Checkout', async() => {
   await pm.accountDeletedPage.clickContinueButton()
 })
 
-test('Verify address details in checkout page', async() => {
-  // Go to Signup/Login page
-  await pm.homePage.clickSignUpLink()
-  await expect(pm.loginPage.newUserSignUpText).toBeVisible()
-
-  // Fill user details
-  await pm.loginPage.register(newUserData.username, newUserData.emailAddress)
-  await expect(pm.signUpPage.enterAccountInformationText).toBeVisible()
-    
-  await pm.signUpPage.typeAccountInformation(newUserData.accountInformation)
-  await pm.signUpPage.typeAddressInformation(newUserData.addressInformation)
-  await pm.signUpPage.clickCreateAccount()
-  await expect(pm.accountCreatedPage.accountCreatedText).toBeVisible()
-  await pm.accountCreatedPage.clickContinueButton()
-  await expect(pm.homePage.loggedInAsUserText).toContainText(newUserData.username)
-
-  // Go to products page
-  await pm.homePage.clickProductsLink()
-
-  // Add products to cart
-  const itemIndexes = [0, 1]
-  for (const itemIndex of itemIndexes) {
-    await pm.homePage.addProductToCart(itemIndex, referenceCart)
-    await pm.homePage.clickContinueShoppingButton()
-  }
-
-  // Go to cart page and check all items are there
-  await pm.homePage.clickCartLink()
-  const numberOfItems = await pm.cartPage.getCartNumberOfItems()
-  expect(numberOfItems).toEqual(referenceCart.length)
-
-  // Start Checkout
-  await pm.cartPage.clickProceedToCheckoutLink()
-
-  // Validate delivery address details
-  await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(newUserData.accountInformation.title)
-  await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(newUserData.addressInformation.firstName)
-  await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(newUserData.addressInformation.lastName)
-  await expect(pm.checkoutPage.deliveryAddress_CompanyName).toContainText(newUserData.addressInformation.company)
-  await expect(pm.checkoutPage.deliveryAddress_StreetAndNumber).toContainText(newUserData.addressInformation.address)
-  await expect(pm.checkoutPage.deliveryAddress_AptInfo).toContainText(newUserData.addressInformation.address2)
-  await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(newUserData.addressInformation.city)
-  await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(newUserData.addressInformation.state)
-  await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(newUserData.addressInformation.zipCode)
-  await expect(pm.checkoutPage.deliveryAddress_Country).toContainText(newUserData.addressInformation.country)
-  await expect(pm.checkoutPage.deliveryAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
-
-  // Validate billing address details
-  await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(newUserData.accountInformation.title)
-  await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(newUserData.addressInformation.firstName)
-  await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(newUserData.addressInformation.lastName)
-  await expect(pm.checkoutPage.billingAddress_CompanyName).toContainText(newUserData.addressInformation.company)
-  await expect(pm.checkoutPage.billingAddress_StreetAndNumber).toContainText(newUserData.addressInformation.address)
-  await expect(pm.checkoutPage.billingAddress_AptInfo).toContainText(newUserData.addressInformation.address2)
-  await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(newUserData.addressInformation.city)
-  await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(newUserData.addressInformation.state)
-  await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(newUserData.addressInformation.zipCode)
-  await expect(pm.checkoutPage.billingAddress_Country).toContainText(newUserData.addressInformation.country)
-  await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
-
-  // Delete account
-  await pm.homePage.clickDeleteAccountLink()
-  await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
-  await pm.accountDeletedPage.clickContinueButton()
-})
-
-test('Login before Checkout', async({ page }) => {
+test('Place Order: Login before Checkout', async({ page }) => {
   // Login with valid credentials
   await pm.homePage.clickSignUpLink()
   await expect(pm.loginPage.loginToYourAccountText).toBeVisible()
@@ -349,6 +283,72 @@ test('Login before Checkout', async({ page }) => {
   await expect(pm.paymentDonePage.orderPlacedText).toBeVisible()
   await pm.paymentDonePage.clickContinueButton()
   await expect(page).toHaveURL('/')
+})
+
+test('Verify address details in checkout page', async() => {
+  // Go to Signup/Login page
+  await pm.homePage.clickSignUpLink()
+  await expect(pm.loginPage.newUserSignUpText).toBeVisible()
+
+  // Fill user details
+  await pm.loginPage.register(newUserData.username, newUserData.emailAddress)
+  await expect(pm.signUpPage.enterAccountInformationText).toBeVisible()
+    
+  await pm.signUpPage.typeAccountInformation(newUserData.accountInformation)
+  await pm.signUpPage.typeAddressInformation(newUserData.addressInformation)
+  await pm.signUpPage.clickCreateAccount()
+  await expect(pm.accountCreatedPage.accountCreatedText).toBeVisible()
+  await pm.accountCreatedPage.clickContinueButton()
+  await expect(pm.homePage.loggedInAsUserText).toContainText(newUserData.username)
+
+  // Go to products page
+  await pm.homePage.clickProductsLink()
+
+  // Add products to cart
+  const itemIndexes = [0, 1]
+  for (const itemIndex of itemIndexes) {
+    await pm.homePage.addProductToCart(itemIndex, referenceCart)
+    await pm.homePage.clickContinueShoppingButton()
+  }
+
+  // Go to cart page and check all items are there
+  await pm.homePage.clickCartLink()
+  const numberOfItems = await pm.cartPage.getCartNumberOfItems()
+  expect(numberOfItems).toEqual(referenceCart.length)
+
+  // Start Checkout
+  await pm.cartPage.clickProceedToCheckoutLink()
+
+  // Validate delivery address details
+  await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(newUserData.accountInformation.title)
+  await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(newUserData.addressInformation.firstName)
+  await expect(pm.checkoutPage.deliveryAddress_firstAndLastName).toContainText(newUserData.addressInformation.lastName)
+  await expect(pm.checkoutPage.deliveryAddress_CompanyName).toContainText(newUserData.addressInformation.company)
+  await expect(pm.checkoutPage.deliveryAddress_StreetAndNumber).toContainText(newUserData.addressInformation.address)
+  await expect(pm.checkoutPage.deliveryAddress_AptInfo).toContainText(newUserData.addressInformation.address2)
+  await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(newUserData.addressInformation.city)
+  await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(newUserData.addressInformation.state)
+  await expect(pm.checkoutPage.deliveryAddress_StateCityZipCode).toContainText(newUserData.addressInformation.zipCode)
+  await expect(pm.checkoutPage.deliveryAddress_Country).toContainText(newUserData.addressInformation.country)
+  await expect(pm.checkoutPage.deliveryAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
+
+  // Validate billing address details
+  await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(newUserData.accountInformation.title)
+  await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(newUserData.addressInformation.firstName)
+  await expect(pm.checkoutPage.billingAddress_firstAndLastName).toContainText(newUserData.addressInformation.lastName)
+  await expect(pm.checkoutPage.billingAddress_CompanyName).toContainText(newUserData.addressInformation.company)
+  await expect(pm.checkoutPage.billingAddress_StreetAndNumber).toContainText(newUserData.addressInformation.address)
+  await expect(pm.checkoutPage.billingAddress_AptInfo).toContainText(newUserData.addressInformation.address2)
+  await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(newUserData.addressInformation.city)
+  await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(newUserData.addressInformation.state)
+  await expect(pm.checkoutPage.billingAddress_StateCityZipCode).toContainText(newUserData.addressInformation.zipCode)
+  await expect(pm.checkoutPage.billingAddress_Country).toContainText(newUserData.addressInformation.country)
+  await expect(pm.checkoutPage.billingAddress_mobileNumber).toContainText(newUserData.addressInformation.mobileNumber)
+
+  // Delete account
+  await pm.homePage.clickDeleteAccountLink()
+  await expect(pm.accountDeletedPage.accountDeletedText).toBeVisible()
+  await pm.accountDeletedPage.clickContinueButton()
 })
 
 test('Download Invoice after purchase order', async({ page }) => {

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
 import { Product } from '../types/product';
+import { existingUser } from '../fixtures/testData';
 
 let pm: PageManager
   /* 
@@ -25,7 +26,7 @@ test('Add Products in Cart', async() => {
   // Go to products page
   await pm.homePage.clickProductsLink()
 
-  // Add products to cart amd go to cart after adding the last one
+  // Add products to cart and go to cart after adding the last one
   const itemIndexes = [0, 1]
   for (const [index, itemIndex] of itemIndexes.entries()) {
     const isLast = index === itemIndexes.length - 1;
@@ -94,4 +95,65 @@ test('Add to cart from Recommended items', async() => {
   await pm.homePage.addProductToCart(itemIndex, referenceCart, 'recommended')
   await pm.homePage.clickViewCartLink()
   expect(await pm.cartPage.getItemReference(0)).toContain(referenceCart[0].productReference) 
+})
+
+test('Search Products and Verify Cart After Login', async() => {
+  // Go to products page
+  await pm.homePage.clickProductsLink()
+  await expect(pm.productsPage.allProductsText).toBeVisible()
+
+  // Search items
+  const textToSearch = 'Jeans'
+  await pm.productsPage.searchProduct(textToSearch)
+  await expect(pm.productsPage.searchedProductsText).toBeVisible()
+
+  // Assert that search results have the text used in the search
+  const searchResults = await pm.productsPage.getSearchResults()
+  searchResults.forEach(searchResult => {
+      // "i" means "Ignore Case"
+      expect(searchResult).toMatch(new RegExp(textToSearch, "i")) 
+  })
+
+  // Add items to cart
+  for (let itemIndex = 0; itemIndex < searchResults.length; itemIndex++ ) {
+    const isLast = itemIndex === searchResults.length - 1;
+    await pm.productsPage.addProductToCart(itemIndex, referenceCart)
+    if (!isLast) {
+      await pm.productsPage.clickContinueShoppingButton();
+    } else {
+      await pm.productsPage.clickViewCartLink()
+    }
+  }
+
+  // Go to cart page and check all items are there
+  let numberOfItems = await pm.cartPage.getCartNumberOfItems()
+  expect(numberOfItems).toEqual(referenceCart.length)
+
+  // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
+  for (let i = 0; i < numberOfItems; i++) {
+    const itemDescription = await pm.cartPage.getItemDescription(i)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
+  }
+
+  // Login
+  await pm.productsPage.clickSignUpLink()
+  await expect(pm.loginPage.loginToYourAccountText).toBeVisible()
+  await pm.loginPage.login(existingUser.emailAddress, existingUser.accountInformation.password)
+  await expect(pm.homePage.loggedInAsUserText).toContainText(existingUser.username)
+
+  // Go to cart page and check all items are still there
+  await pm.homePage.clickCartLink()
+  numberOfItems = await pm.cartPage.getCartNumberOfItems()
+  expect(numberOfItems).toEqual(referenceCart.length)
+
+  for (let i = 0; i < numberOfItems; i++) {
+    const itemDescription = await pm.cartPage.getItemDescription(i)
+    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+    expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+    expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+    expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
+  }
 })
