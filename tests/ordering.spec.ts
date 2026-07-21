@@ -437,10 +437,10 @@ test('Download Invoice after purchase order', async({ page }) => {
   await expect(pm.paymentDonePage.orderPlacedText).toBeVisible()
 
   // Download invoice
-  const downloadPromise = page.waitForEvent('download');
+  const downloadPromise = page.waitForEvent('download')
   await pm.paymentDonePage.clickDownloadInvoiceButton()
-  const download = await downloadPromise;
-  expect(download.suggestedFilename()).toBe('invoice.txt');
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toBe('invoice.txt')
 
   // Delete account
   await pm.homePage.clickDeleteAccountLink()
