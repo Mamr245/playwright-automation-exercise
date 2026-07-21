@@ -155,4 +155,12 @@ test('Search Products and Verify Cart After Login', async() => {
     expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
     expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
   }
+
+  // Test teardown: delete cart items
+  let count = await pm.cartPage.cartDeleteButtons.count()
+  while (count > 0) {
+      await pm.cartPage.cartDeleteButtons.first().click()
+      await expect(pm.cartPage.cartDeleteButtons).toHaveCount(count - 1)
+      count--
+  }
 })

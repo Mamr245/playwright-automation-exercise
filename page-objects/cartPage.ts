@@ -4,6 +4,10 @@ export class CartPage extends HomePage {
     get cartTable() {
         return this.page.locator('#cart_info_table')
     }
+
+    get cartDeleteButtons() {
+        return this.page.locator('.cart_quantity_delete')
+    }
     
     async getCartNumberOfItems() {
         return this.page.locator('tr[id^="product-"]').count()
