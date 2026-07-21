@@ -14,7 +14,7 @@ export default defineConfig({
     ['html']
   ],
   use: {
-    baseURL: process.env.BASE_URL,
+    baseURL: 'https://automationexercise.com',
     screenshot: 'only-on-failure',
     testIdAttribute: 'data-qa',
     trace: 'on-first-retry',
