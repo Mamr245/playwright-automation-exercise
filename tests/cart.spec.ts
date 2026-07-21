@@ -43,7 +43,7 @@ test('Add Products in Cart', async() => {
   expect(numberOfItems).toEqual(referenceCart.length)
 
   // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0 i < numberOfItems i++) {
+  for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -114,7 +114,7 @@ test('Search Products and Verify Cart After Login', async() => {
   })
 
   // Add items to cart
-  for (let itemIndex = 0 itemIndex < searchResults.length itemIndex++ ) {
+  for (let itemIndex = 0; itemIndex < searchResults.length; itemIndex++ ) {
     const isLast = itemIndex === searchResults.length - 1
     await pm.productsPage.addProductToCart(itemIndex, referenceCart)
     if (!isLast) {
@@ -129,7 +129,7 @@ test('Search Products and Verify Cart After Login', async() => {
   expect(numberOfItems).toEqual(referenceCart.length)
 
   // For each item in the cart page, ensure the data displayed is equal to what is in the referenceCart array
-  for (let i = 0 i < numberOfItems i++) {
+  for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
@@ -148,7 +148,7 @@ test('Search Products and Verify Cart After Login', async() => {
   numberOfItems = await pm.cartPage.getCartNumberOfItems()
   expect(numberOfItems).toEqual(referenceCart.length)
 
-  for (let i = 0 i < numberOfItems i++) {
+  for (let i = 0; i < numberOfItems; i++) {
     const itemDescription = await pm.cartPage.getItemDescription(i)
     const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
     expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
