@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect } from "../fixtures/fixture";
 import { PageManager } from "../page-objects/pageManager"
 import { creditCardData, newUserData } from "../fixtures/testData"
 import { existingUser } from "../fixtures/testData"

@@ -43,7 +43,6 @@ export class HomePage {
 
     async goTo() {
         await this.page.goto("/")
-        await this.clickConsentButton()
     }
 
     async clickSignUpLink() {

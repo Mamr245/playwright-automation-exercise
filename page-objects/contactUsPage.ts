@@ -18,14 +18,15 @@ export class ContactUsPage {
         await this.page.getByTestId('message').fill(message)
     }
 
-    async uploadFile() {
-        await this.page.locator('input[type="file"]').setInputFiles('fixtures/testData_orderDetails.pdf')
+    async uploadFile(filePath: string) {
+        await this.page.locator('input[type="file"]').setInputFiles(filePath)
     }
 
     async submitInquiry () {
         this.page.once('dialog', async dialog => {
             await dialog.accept()
         })
+        //await this.page.locator('.google-anno-skip.google-anno-sc').waitFor()
         await this.page.getByTestId('submit-button').click()
     }
 
