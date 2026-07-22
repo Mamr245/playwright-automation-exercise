@@ -9,6 +9,7 @@ on:
     - cron: "0 0 * * *"
 jobs:
   test:
+    name: Run Playwright Tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
