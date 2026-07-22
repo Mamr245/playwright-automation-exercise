@@ -1,7 +1,7 @@
 <h1 align="center">Playwright Automation Project :computer:</h1> 
 
 ### :question: What is this?
-This project contains automated tests for the test cases available at https://automationexercise.com/test_cases. It was created to practice and improve my web test automation skills. It runs every day using GitHub Actions and you can check the results [here](https://github.com/Mamr245/playwright-automation-exercise/actions). 
+This project contains automated tests for the test cases available at https://automationexercise.com/test_cases. It was created to practice and improve my web test automation skills. The project also includes a GitHub Actions workflow for running the test suite. You can view past runs and results [here](https://github.com/Mamr245/playwright-automation-exercise/actions). 
 
 ### :hammer: Technologies used:
 `Playwright` `VSCode` `Git`
