@@ -223,7 +223,14 @@ test('Place Order: Login before Checkout', async({ page }) => {
   // Go to cart page and check all items are there
   await pm.homePage.clickCartLink()
   const numberOfItems = await pm.cartPage.getCartNumberOfItems()
-  expect(numberOfItems).toEqual(referenceCart.length)
+
+  // Try catch is used to ensure that the cart is cleaned even if the assertion fails
+  try {
+    expect(numberOfItems).toEqual(referenceCart.length)
+  } catch (error) {
+    await pm.cartPage.emptyCart()
+    throw error
+  }
 
   // Start Checkout
   await pm.cartPage.clickProceedToCheckoutLink()

@@ -1,3 +1,4 @@
+import { expect } from "../fixtures/fixture"
 import { HomePage } from "./homePage"
 
 export class CartPage extends HomePage {
@@ -43,5 +44,14 @@ export class CartPage extends HomePage {
 
     async clickRegisterLoginLink() {
         await this.page.getByRole('link', {name: 'Register / Login'}).click()
+    }
+
+    async emptyCart() {
+        let count = await this.cartDeleteButtons.count()
+        while (count > 0) {
+            await this.cartDeleteButtons.first().click()
+            await expect(this.cartDeleteButtons).toHaveCount(count - 1)
+            count--
+        }
     }
 }

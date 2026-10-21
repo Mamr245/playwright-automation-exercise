@@ -146,21 +146,18 @@ test('Search Products and Verify Cart After Login', async() => {
   // Go to cart page and check all items are still there
   await pm.homePage.clickCartLink()
   numberOfItems = await pm.cartPage.getCartNumberOfItems()
-  expect(numberOfItems).toEqual(referenceCart.length)
 
-  for (let i = 0; i < numberOfItems; i++) {
-    const itemDescription = await pm.cartPage.getItemDescription(i)
-    const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
-    expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
-    expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
-    expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
-  }
-
-  // Test teardown: delete cart items
-  let count = await pm.cartPage.cartDeleteButtons.count()
-  while (count > 0) {
-      await pm.cartPage.cartDeleteButtons.first().click()
-      await expect(pm.cartPage.cartDeleteButtons).toHaveCount(count - 1)
-      count--
+  // Try catch is used to ensure that the cart is cleaned even if the assertions fail
+  try {
+    expect(numberOfItems).toEqual(referenceCart.length)
+    for (let i = 0; i < numberOfItems; i++) {
+      const itemDescription = await pm.cartPage.getItemDescription(i)
+      const referenceItemData = referenceCart.find((item) => item.name === itemDescription)
+      expect(await pm.cartPage.getItemPrice(i)).toContain(`Rs. ${referenceItemData!.price}`)
+      expect(await pm.cartPage.getItemTotalQuantity(i)).toContain(`${referenceItemData!.totalQuantity}`)
+      expect(await pm.cartPage.getItemTotalPrice(i)).toContain(`Rs. ${referenceItemData!.totalPrice}`)
+    } 
+  } finally {
+    await pm.cartPage.emptyCart()
   }
 })
